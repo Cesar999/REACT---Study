@@ -1,0 +1,26 @@
+.active-link{
+	background-color: rgb(63, 94, 194);
+	color: white;
+}
+
+nav {
+    padding: 30px;
+}
+
+nav a {
+    text-decoration: none;
+    padding: 30px;
+	background-color:white;
+	color:  rgb(63, 94, 194);
+}
+
+.cards-container {
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+    flex-wrap: wrap;
+}
+
+button, a {
+    cursor: pointer;
+}

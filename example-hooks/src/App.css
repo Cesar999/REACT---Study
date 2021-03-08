@@ -1,0 +1,19 @@
+.App {
+  text-align: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: stretch;
+  align-items: stretch;
+}
+
+.App h1, .App h2 {
+  margin: 0;
+}
+
+.App > div {
+  flex-grow: 1;
+}
+
+.App button {
+  cursor: pointer;
+}

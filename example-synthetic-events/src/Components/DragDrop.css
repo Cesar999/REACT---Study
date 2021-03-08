@@ -1,0 +1,36 @@
+.DragDrop {
+    width: 40vw;
+    height: 40vh;
+    margin: auto;
+    background-color: black;
+}
+.row {
+    display: flex;
+    width: 100%;
+    height: 25%;
+}
+.column {
+    height: 100%;
+    width: 25%;
+    background-color: tomato;
+    box-sizing: border-box;
+    border: 2px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.column:nth-child(even){
+    background-color: teal;
+}
+.draggable {
+    background-color: white;
+    border-radius: 50%;
+    height: 75%;
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 600;
+    font-size: 18px;
+    cursor: pointer;
+}

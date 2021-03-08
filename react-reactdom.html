@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="root"></div>
+    <script crossorigin src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    <script>
+
+        const Person = props => {
+            return React.createElement('div', {key: props.index}, [
+                React.createElement('h1', {}, props.user + ` - ${props.index}`),
+                React.createElement('p', {}, props.job)
+            ]);
+        }
+
+        const title = React.createElement('h1', {}, 'React is redered');
+        const users = [
+            {user:'Cesar Encinas', job: 'UI Software Engineer'},
+            {user:'Leslie Gaxiola', job: 'Human Resourses'},
+            {user:'Ricardo Encinas', job: 'Software Engineer'}
+        ];
+        const App = () => {
+            return React.createElement('div', {}, [
+                title, 
+                ...users.map((user, index) => React.createElement(Person, {index, ...user}, null))
+            ]);
+        }
+
+        ReactDOM.render(React.createElement(App), document.querySelector('#root'));
+    </script>
+</body>
+</html>

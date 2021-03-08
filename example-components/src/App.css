@@ -1,0 +1,15 @@
+.App {
+  text-align: center;
+}
+
+.App hr {
+  border: 0;
+  clear:both;
+  display:block;
+  width: 96%;               
+  background-color:#868686;
+  height: 2px;
+  margin: auto;
+  margin-top: 15px;
+  margin-bottom: 15px;
+}

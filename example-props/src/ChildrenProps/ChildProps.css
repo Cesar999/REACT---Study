@@ -1,0 +1,15 @@
+.ChildProps {
+    width: 50vw;
+    margin: auto;
+    margin-top: 30px;
+}
+
+.ChildProps .owned {
+    background-color: teal;
+    border-radius: 10px;
+}
+
+.ChildProps .desire {
+    background-color: tomato;
+    border-radius: 10px;
+}

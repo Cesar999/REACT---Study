@@ -1,0 +1,10 @@
+.UseCallbackComponent {
+    background-color: rgb(111, 189, 114);
+    padding: 10px;
+}
+
+.UseCallbackComponent .list {
+    display: flex;
+    justify-content: space-around;
+    align-self: center;
+}

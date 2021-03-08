@@ -1,0 +1,44 @@
+.Item {
+    padding: 10px;
+    border: 2px solid black;
+    margin: 10px;  
+    transform: translateX(-400px);
+    opacity: 0;
+    animation: animate 0.5s linear forwards; 
+}
+
+.Item .quote {
+    width: 300px;
+}
+
+.Item:nth-child(1){
+    animation-delay: 0;
+    background-color: goldenrod;
+}
+.Item:nth-child(2){
+    animation-delay: 0.5s;
+    background-color: silver;
+}
+.Item:nth-child(3){
+    animation-delay: 1s;
+    background-color: tomato;
+}
+.Item:nth-child(4){
+    animation-delay: 1.5s;
+    background-color: teal;
+}   
+.Item:nth-child(5){
+    animation-delay: 2s;
+    background-color: cornflowerblue;
+}
+
+@keyframes animate {
+    0%{
+        transform: translateX(-500px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(0px);
+        opacity: 1;
+    }
+}

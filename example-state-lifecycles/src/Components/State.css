@@ -1,0 +1,31 @@
+.State {
+    font-size: 16px;
+}
+
+.State input, .State button  {
+    padding: 5px 10px;
+}
+
+.State .count-wrapper, .State .text-wrapper{
+    border: 2px solid black;
+    padding: 15px;
+    width: 50vw;
+    margin: 15px auto;
+}
+
+.State .count-wrapper {
+    background-color: teal;
+}
+.State .count-wrapper p, .State .text-wrapper p {
+    font-size: 24px;
+    color: white;
+    font-weight: bold;
+    border: 2px solid white;
+    width: fit-content;
+    padding: 0 15px;
+    margin: auto;
+}
+
+.State .text-wrapper {
+    background-color: tomato;
+}

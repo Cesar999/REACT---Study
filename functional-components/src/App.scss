@@ -1,0 +1,13 @@
+.App {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 100vw;
+    max-width: 100%;
+
+    & > h1 {
+        background-color: teal;
+        color: white;
+        padding: 100px;
+    }
+}

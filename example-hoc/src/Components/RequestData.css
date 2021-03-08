@@ -1,0 +1,18 @@
+.RequestData {
+    margin: 30px;
+}
+
+.RequestData button { 
+    margin-bottom: 10px;
+}
+
+.RequestData .data {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.RequestData .data div {
+    padding: 5px;
+}

@@ -1,0 +1,61 @@
+.FormComponent {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    width: 60vw;
+    height: 30vh;
+    font-size: 16px;
+    margin: auto;
+}
+
+.FormComponent fieldset.row {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: row;
+    border: none;
+    width: 40%;
+}
+.FormComponent form, .result {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: column;
+    border: 2px solid black;
+    width: 50%;
+    margin: 0 auto;
+}
+
+.FormComponent form {
+    margin-bottom: 10px;
+    background-color: teal;
+}
+
+label[for="username"], label[for="pokemon"] {
+    font-weight: bold;
+}
+
+label[for="legendary"] {
+    margin-left: 15px;
+}
+
+.FormComponent form input, .FormComponent form input[type="submit"], .FormComponent form select {
+    margin: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    text-align: center;
+}
+
+.FormComponent form input[type="submit"] {
+    margin-top: 10px;
+    padding: 10px;
+}
+
+.result {
+    font-weight: bold;
+    background-color: cornflowerblue;
+}
+.result .value, .result .checkbox {
+    font-weight: normal;
+}

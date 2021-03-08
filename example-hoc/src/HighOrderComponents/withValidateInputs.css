@@ -1,0 +1,6 @@
+.validation-text {
+    transition-property: color;
+    transition-duration: 2s;
+    background-color: black;
+    padding: 15px;
+}

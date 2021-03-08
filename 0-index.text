@@ -6,11 +6,13 @@ Redux Selectors
 Saga
 
 Hooks:
-    routing Hooks
-    useContext
     useReducer
+
+React Lazy
 
 Testing
 
 React Webpack
 
+//----------------
+rm -rf .git

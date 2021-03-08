@@ -1,0 +1,20 @@
+.MusicPlayerPro {
+    background-color: gold;
+    padding: 30px;
+    width: 400px;
+    margin: auto;
+}
+
+.PlayListPro {
+    background-color: silver;
+    padding: 15px;
+}
+
+.SongPro {
+    background-color: rgb(230, 155, 71);
+    padding: 5px;
+}
+
+button {
+    cursor: pointer;
+}

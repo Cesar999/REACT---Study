@@ -379,6 +379,20 @@ Routing in React?
 
     Component mount a new component an unmount, it uses the lifecycle methods, Render just render updates the component dont called lifecycle methods.
 
+    Routing Hooks: React Router ships with a few hooks that let you access the state of the router and perform navigation from inside your components.
+
+        useHistory: The useHistory hook gives you access to the history instance that you may use to navigate. 
+        let history = useHistory();
+
+        useLocation: The useLocation hook returns the location object that represents the current URL. You can think about it like a useState that returns a new location whenever the URL changes.
+        let location = useLocation();
+
+        useParams: useParams returns an object of key/value pairs of URL parameters. Use it to access match.params of the current <Route>.
+        let params = useParams();
+
+        useRouteMatch: The useRouteMatch hook attempts to match the current URL in the same way that a <Route> would. It’s mostly useful for getting access to the match data without actually rendering a <Route>.
+        let match = useRouteMatch("/song/:id");
+
 Styles on React?
     CSS Stylesheet: Simply import css file import './DottedBox.css' so you can have a separate css file for each component.
     import './DottedBox.css';
@@ -839,45 +853,7 @@ Context API?
     A React component that subscribes to context changes. This lets you subscribe to a context within a function component.
     Requires a function as a child. The function receives the current context value and returns a React node. The value argument passed to the function will be equal to the value prop of the closest Provider for this context above in the tree. If there is no Provider for this context above, the value argument will be equal to the defaultValue that was passed to createContext().
 
-    import React from 'react';
-    export default React.createContext();
-
-    import myContext from './myContext';
-    <myContext.Provider value={//...}>
-        //...
-    </myContext.Provider>
-
-    import React from 'react';
-    import myContext from './myContext';
-        <myContext.Consumer>
-            {(value)=>
-                <React.Fragment>
-                    <h1>value</h1>
-                </React.Fragment>
-            }
-        </myContext.Consumer>);
-
     The contextType property on a class can be assigned a Context object created by React.createContext(). This lets you consume the nearest current value of that Context type using this.context. You can reference this in any of the lifecycle methods including the render function.
-
-    class MyClass extends React.Component {
-    componentDidMount() {
-        let value = this.context;
-        /* perform a side-effect at mount using the value of MyContext */
-    }
-    componentDidUpdate() {
-        let value = this.context;
-        /* ... */
-    }
-    componentWillUnmount() {
-        let value = this.context;
-        /* ... */
-    }
-    render() {
-        let value = this.context;
-        /* render something based on the value of MyContext */
-    }
-    }
-    MyClass.contextType = MyContext;
 
 
 Server Side Rendering?

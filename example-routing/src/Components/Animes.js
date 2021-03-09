@@ -1,4 +1,5 @@
 import Item from './Item';
+import {useHistory, useLocation, useParams, useRouteMatch} from "react-router-dom";
 
 function Animes(props){
     const animes = [
@@ -14,6 +15,17 @@ function Animes(props){
         let temp = animesElements[itemID];
         animesElements = temp;
     }
+
+    const history = useHistory();
+    const location = useLocation();
+    const params = useParams();
+    const match = useRouteMatch("/animes/:id");
+
+    console.log(history, ' history - Animes');
+    console.log(location, ' location - Animes');
+    console.log(params, ' params - Animes');
+    console.log(match, ' match - Animes');
+
     console.log('params: ', props.match.params);
     return (
         <div className="Animes">

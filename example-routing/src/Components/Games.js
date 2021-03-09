@@ -1,4 +1,5 @@
 import Item from './Item';
+import {useHistory, useLocation, useParams, useRouteMatch} from "react-router-dom";
 
 function Games(props){
     const games = [
@@ -14,6 +15,15 @@ function Games(props){
         let temp = gamesElements[itemID];
         gamesElements = temp;
     }
+    const history = useHistory();
+    const location = useLocation();
+    const params = useParams();
+    const match = useRouteMatch("/games/:id");
+
+    console.log(history, ' history - games');
+    console.log(location, ' location - games');
+    console.log(params, ' params - games');
+    console.log(match, ' match - games');
     console.log('params: ', props.match.params);
     return (
         <div className="Games">

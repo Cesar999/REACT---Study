@@ -855,6 +855,9 @@ Context API?
 
     The contextType property on a class can be assigned a Context object created by React.createContext(). This lets you consume the nearest current value of that Context type using this.context. You can reference this in any of the lifecycle methods including the render function.
 
+Context vs Redux?
+    Context API: Resourceful and ideal for small applications where state changes are minimal
+    Redux: Perfect for larger applications where there are high-frequency state updates
 
 Server Side Rendering?
     Use

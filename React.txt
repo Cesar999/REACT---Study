@@ -295,7 +295,7 @@ Redux?
 
     'redux-form' its a library that provides of a collection of reducer creators and actions creators that makes implementing complex and custom forms with react and redux simple and performance.
     https://redux-form.com/8.2.2/docs/api/props.md/
-    
+
     redux-form primarily consists of three things:
         A Redux reducer that listens to dispatched redux-form actions to maintain your form state in Redux.
         A React component decorator that wraps your entire form in a Higher Order Component (HOC) and provides functionality via props.
@@ -672,7 +672,7 @@ Saga?
         yield fork(actionStatistics); 
     }
 
-    call (fn, args) runs function pause saga on promise, creates an effecto that instructs the middleware to call the function fn with args.
+    call (fn, args) runs function pause saga on promise, creates an effect that instructs the middleware to call the function fn with args.
 
     put(action)
     Creates an Effect description that instructs the middleware to dispatch an action to the Store. This effect is non-blocking and any errors that are thrown downstream (e.g. in a reducer) will not bubble back into the saga.
@@ -685,7 +685,7 @@ Saga?
     Spawns a saga on each action dispatched to the Store that matches pattern action.
 
     all([effects])
-    creates an effect description that isntructs the middleware to run multiple effects in parallel and wait for all of the to complete.
+    creates an effect description that instructs the middleware to run multiple effects in parallel and wait for all of the to complete.
 
     Advantages:
       syncrhonous looking code with an easy to follow step by step process.

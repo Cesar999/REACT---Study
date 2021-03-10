@@ -1,0 +1,31 @@
+.MainApp {
+    margin: auto;
+    margin-top: 30px;
+    width: fit-content;
+}
+
+.MainApp .userItem {
+    border: 2px solid black;
+    margin: 10px;
+    padding: 10px;
+    background-color: cornflowerblue;
+}
+
+.MainApp .GetForm {
+    padding: 10px;
+    background-color: rgb(113, 206, 113);
+}
+
+.MainApp .PostForm {
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: rgb(224, 100, 100);
+}
+
+.MainApp .error {
+    color: red;
+    padding: 10px;
+}

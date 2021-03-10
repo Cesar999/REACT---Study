@@ -1,0 +1,13 @@
+.MainApp {
+
+}
+
+.MainApp .list {
+    position: fixed;
+    top: 0;
+    left: 50px;
+}
+
+.MainApp .list .item {
+    padding: 10px;
+}

@@ -1,0 +1,24 @@
+.TodoList {
+    width: 500px;
+    margin: auto;
+    margin-top: 30px;
+}
+
+.TodoList button {
+    cursor: pointer;
+    padding: 5px;
+}
+
+.TodoList .createTodo {
+    padding: 10px;
+    background-color: teal;
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    align-items: center;
+}
+
+.TodoList input {
+    padding: 10px;
+    height: 10px;
+}

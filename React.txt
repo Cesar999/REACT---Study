@@ -291,11 +291,15 @@ Redux?
     applyMiddleware: Is a way to extend redux functionality by applying external libraries. The most common use is to support asynchronous actions. applyMiddleware(middleware).
     combienReducers is a helper function that turns an object whose values are different reducing functions into a single function. Receives an object as an argument. combineReducers({users: usersReducer, admins: adminsReducer});
 
-    'redux-thunk' is a middleware library to hanlde the asynchronous actions on redux.
+    'redux-thunk' is a middleware library to hanlde the asynchronous actions on redux. edux Thunk is middleware that allows you to return functions, rather than just actions, within Redux. This allows for delayed actions, including working with promises.
 
     'redux-form' its a library that provides of a collection of reducer creators and actions creators that makes implementing complex and custom forms with react and redux simple and performance.
-
-    reducer as formReducer: provides the reducers to add to the store.
+    https://redux-form.com/8.2.2/docs/api/props.md/
+    
+    redux-form primarily consists of three things:
+        A Redux reducer that listens to dispatched redux-form actions to maintain your form state in Redux.
+        A React component decorator that wraps your entire form in a Higher Order Component (HOC) and provides functionality via props.
+        A Field component to connect your individual field inputs to the Redux store.
 
     reduxForm is High Order Component function that takes a configuration object and returns a new function. Is used to wrap the form component and bind user interaction to dispatch redux actions. Receives a unique name for the form.
     const userForm = reduxForm({
@@ -695,6 +699,8 @@ Redux-Selectors?
     A selector is a function that accepts Redux state as an argument and returns data that is derived from that state. Selectors can provide performance optimizations to your application and can also help you encapsulate your global state tree. If your application is growing large and unwieldy, you may benefit from creating your own selectors or using a library such as Reselect, which utilizes memoized selectors.
     Selectors can compute derived data, allowing Redux to store the minimal possible state.
 
+    Why should you use a selector? It is a best practice to keep your Redux store state minimal and derive data from the state as needed. Selectors help with that. They can compute derived data, allowing Redux to store the minimal possible state. Selectors are also very efficient. A selector is not recomputed unless one of its arguments changes.
+
     Selectors are simply functions that are used to select a subset data from a larger data collection.
     A “selector” is simply a function that accepts Redux state as an argument and returns data that is derived from that state.
 
@@ -858,6 +864,10 @@ Context API?
 Context vs Redux?
     Context API: Resourceful and ideal for small applications where state changes are minimal
     Redux: Perfect for larger applications where there are high-frequency state updates
+
+    for low-frequency updates like locale, theme changes, user authentication, etc. the React Context is perfectly fine. But with a more complex state which has high-frequency updates, the React Context won't be a good solution. Because, the React Context will trigger a re-render on each update, and optimizing it manually can be really tough. And there, a solution like Redux is much easier to implement.
+
+    For low-frequency updates like locale, theme changes, user authentication, etc. the React Context is perfectly fine. But with a more complex state which has high-frequency updates, the React Context won't be a good solution. Because, the React Context will trigger a re-render on each update, and optimizing it manually can be really tough. And there, a solution like Redux is much easier to implement.
 
 Server Side Rendering?
     Use

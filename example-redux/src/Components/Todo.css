@@ -1,0 +1,24 @@
+.Todo {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    background-color: cornflowerblue;
+    width: 100%;
+    padding: 5px;
+}
+
+.Todo .text {
+    margin-left: 10px;
+}
+
+.Todo .date {
+    margin-left: auto;
+}
+
+.Todo .delete {
+    margin-left: auto;
+}
+
+.Todo input[type="checkbox"]{
+    cursor: pointer;
+}

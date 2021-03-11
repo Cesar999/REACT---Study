@@ -1,0 +1,61 @@
+
+    import React from 'react';
+    import ReactDOM from 'react-dom';
+    import './index.css';
+    class App extends React.Component{
+        render(){
+            return(
+                <div>Hello World</div>
+            )
+        }
+    }
+    ReactDOM.render(<App />, document.getElementById('app'))
+
+    <!DOCTYPE html>
+    <html>
+        <head><title>
+            my-app
+        </title></head>
+        <body>
+            <div id="app"></div>
+        </body>
+    </html>
+
+    npm install --save-dev @babel/core @babel/preset-env @babel/preset-react webpack webpack-cli webpack-dev-server babel-loader css-loader style-loader html-webpack-plugin
+
+    create webpagk config: webpack.config.js
+    var path = require('path');
+    var HtmlWebpackPlugin =  require('html-webpack-plugin');
+    module.exports = {
+        entry : './app/index.js',
+        output : {
+            path : path.resolve(__dirname , 'dist'),
+            filename: 'index_bundle.js'
+        },
+        module : {
+            rules : [
+                {test : /\.(js)$/, use:'babel-loader'},
+                {test : /\.css$/, use:['style-loader', 'css-loader']}
+            ]
+        },
+        mode:'development',
+        plugins : [
+            new HtmlWebpackPlugin ({
+                template : 'app/index.html'
+            })
+        ]
+    }
+
+    config package.json
+    "main": "index.js",
+    "babel":{
+        "presets" : [
+        "@babel/preset-env",
+        "@babel/preset-react"
+        ]
+    }
+
+    create scripts: 
+    "scripts": {
+        "start": "webpack-dev-server --open"
+    }

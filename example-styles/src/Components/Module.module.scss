@@ -1,0 +1,31 @@
+.Module {
+    background-color: tomato;
+    color: white;
+    font-weight: bold;
+    padding: 10px;
+    width: 50%;
+    box-sizing: border-box;
+
+    .title {
+        text-transform: capitalize;
+        // offset-x | offset-y | blur-radius | color
+        text-shadow: 2px 2px 4px gray;
+    }
+
+    .text {
+        border-radius: 5px;
+        text-decoration: underline;
+    }
+
+    .list {
+        border:2px solid gray;
+        list-style-position: inside;
+        list-style-type: square;
+
+        .item {
+            border: 2px solid white;
+            padding: 5px;
+        }
+
+    }
+}

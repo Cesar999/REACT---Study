@@ -2,6 +2,30 @@ What is React?
     React is a front-end JavaScript library developed by facebook.
     It follows the component based approach which helps in building rusable UI elements. React uses the Virtual DOM and unidirectional data binding.
 
+create-react-app?
+    is the official CLI (Command Line Interface) for React to create React apps with no build configuration.
+    We don’t need to install or configure tools like Webpack or Babel. They are preconfigured and hidden so that we can focus on the code. We can install easily just like any other node modules. Then it is just one command to start the React project.
+
+    npm start Runs the app in development mode. Open http://localhost:3000 to view it in the browser.
+
+    npm test Runs the test watcher in an interactive mode. By default, runs tests related to files changed since the last commit.
+
+    npm run build
+    Builds the app for production to the build folder. It correctly bundles React in production mode and optimizes the build for the best performance.
+
+React Without create-react-app?
+    Create a directory in your system
+    go to the directory
+    create package.json file: npm init -y
+    install react and react-dom: npm install react react-dom
+    create app folder
+    create three files within it: index.js index.css index.html
+    install dependencies: npm install --save-dev @babel/core @babel/preset-env @babel/preset-react webpack webpack-cli webpack-dev-server babel-loader css-loader style-loader html-webpack-plugin
+    create webpack config: webpack.config.js
+    config package.json
+    define scripts
+    run scripts
+
 What is the Virtual DOM?
     The Virtual DOM is an abstraction of the HTML DOM. It is lightweight and detached from the browser-specific implementation details. ReactElements lives in the virtual DOM. They make the basic nodes here. Once we defined the elements, ReactElements can be render into the "real" DOM. This Virtual DOM works in three simple steps.
     Whenever any underlying data changes, the entire UI is re-rendered in Virtual DOM representation.
@@ -56,19 +80,6 @@ Render props / this.props.children ?
     It's important to remember that just because the pattern is called render props you don't have to use a called prop renderto use this pattern . In fact, any prop that is a function that a component uses to figure out what to render is technically a "render prop".
 
     this.props.children it is used to display whatever you include between the opening and closing tags when invoking a component.
-
-    const App = () => (
-    <Amount>
-        {() => (
-        <div>
-            <Pound amount={amount} />
-            <Euro amount={amount} />
-        </div>
-        )}
-    </Amount>
-    );
-
-    {this.props.children()}
 
 state?
     State is a javascript object owned by the component where it is declared that determines the its rendering and behaviour. Its purpose is to be dynamic an interactive. A component can initialize its state and update it whenever necessary. Thus the state is mutable but it should not be directly mutated.
@@ -152,7 +163,6 @@ Life Cycle methods?
     (state change)
     componentWillUpdate: React invokes this method immediately before rendering when new props or state are being received. There is not much use for componentWillUpdate(nextProps, nextState) and should probably be avoided (similar to componentWillMount). You should not do anything that would change the state at this point — use componentWillReceiveProps if you need to do anything before a render.
 
-
 What is a Component vs Element?
     React element is an object representation of some UI it describes what you want to see on the screen.
     A React component is a function or a class which optionally accepts input and returns a React element (typically via JSX which gets compiled to a createElement invocation). They are the building blocks of a React application’s UI. These components split up the entire UI into small independent and reusable pieces.
@@ -179,17 +189,52 @@ Pure Component?
         State/Props should not have a hierarchy
         You should call forceUpdate when data changes
 
-refs in React?
-    Refs is the short hand for References in React. It allows you to get direct access to a DOM element or an instance of a component.
+Controlled and Uncontrolled components?
+    This relates to stateful DOM components (form elements) and the difference:
+    A Controlled Component is one that takes its current value through props and notifies changes through callbacks like onChange. A parent component “controls” it by handling the callback and managing its own state and passing the new values as props to the controlled component.
+    A Uncontrolled Component is one that stores its own state internally, and you query the DOM using a ref to find its current value when you need it. This is a bit more like traditional HTML.
 
-    this.textInput = React.createRef();
-    this.textInput.current.focus();
-    <input type="text" ref={this.textInput} />
+Hooks?
+    Hooks are a new addition in React 16.8. They let you use state, lifecycle methods and other React features without writing a class.
+    Hooks allow you to reuse stateful logic without changing your component hierarchy. Hooks let you split one component into smaller functions based on what pieces are related (such as setting up a subscription or fetching data).
 
-    Following are the cases when refs should be used:
-        When you need to manage focus, select text or media playback
-        To trigger imperative animations
-        Integrate with third-party DOM libraries.
+    useState: Returns a stateful value, and a function to update it.
+    During the initial render, the returned state (state) is the same as the value passed as the first argument (initialState).
+    The initialState argument is the state used during the initial render. 
+    If you pass an empty array as a second parameter it behaves as a componentDidMount.
+    The values inside of the array are treated like a subsciption to the them.
+    You can return a function on useEffect this will act as a componentWillUnmount.
+
+    useEffect: The function passed to useEffect will run after the render is committed to the screen. By default, effects run after every completed render, but you can choose to fire it only when certain values have changed.
+    The default behavior for effects is to fire the effect after every completed render behaves as a componentDidUpdate. 
+
+    Only Run Once, on Mount: You can pass the special value of empty array [] as a way of saying “only run on mount, and clean up on unmount”.
+
+    Run useEffect on State Change: By default, useEffect runs after every render, but it’s also perfect for running some code in response to a state change. You can limit when the effect runs by passing the second argument to useEffect. If you want your effects to run less often, you can provide a second argument – an array of values. Think of them as the dependencies for that effect. If one of the dependencies has changed since the last time, the effect will run again. (It will also still run after the initial render).
+
+    useEffect() is for side-effects:
+        A functional React component uses props and/or state to calculate the output. If the functional component makes calculations that don’t target the output value, then these calculations are named side-effects.
+        Examples of side-effects are fetch requests, manipulating DOM directly, using timer functions like setTimeout(), and more.
+        The component rendering and side-effect logic are independent. So it would be a mistake to perform side-effects directly in the body of the component.
+        How often the component renders isn’t something you can control — if React wants to render the component, you cannot stop it.
+
+    useRef: useRef returns a mutable ref object whose .current property is initialized to the passed argument (initialValue). The returned object will persist for the full lifetime of the component.
+
+    useMemo: Returns a memoized value. Pass a “create” function and an array of dependencies. useMemo will only recompute the memoized value when one of the dependencies has changed. This optimization helps to avoid expensive calculations on every render.
+    Remember that the function passed to useMemo runs during rendering. Don’t do anything there that you wouldn’t normally do while rendering. For example, side effects belong in useEffect, not useMemo.
+
+    useCallback: Returns a memoized callback. Pass an inline callback and an array of dependencies. useCallback will return a memoized version of the callback that only changes if one of the dependencies has changed. This is useful when passing callbacks to optimized child components that rely on reference equality to prevent unnecessary renders (e.g. shouldComponentUpdate).
+
+    useContext: Accepts a context object (the value returned from React.createContext) and returns the current context value for that context. The current context value is determined by the value prop of the nearest <MyContext.Provider> above the calling component in the tree.
+    When the nearest <MyContext.Provider> above the component updates, this Hook will trigger a rerender with the latest context value passed to that MyContext provider.
+    Don’t forget that the argument to useContext must be the context object itself:
+    A component calling useContext will always re-render when the context value changes. If re-rendering the component is expensive, you can optimize it by using memoization.
+
+    useReducer: An alternative to useState. Accepts a reducer of type (state, action) => newState, and returns the current state paired with a dispatch method. (If you’re familiar with Redux, you already know how this works.)
+    useReducer is usually preferable to useState when you have complex state logic that involves multiple sub-values or when the next state depends on the previous one. useReducer also lets you optimize performance for components that trigger deep updates because you can pass dispatch down instead of callbacks.
+
+    useLayoutEffect: The signature is identical to useEffect, but it fires synchronously after all DOM mutations. Use this to read layout from the DOM and synchronously re-render. Updates scheduled inside useLayoutEffect will be flushed synchronously, before the browser has a chance to paint.
+
 
 lifting the state?
     To shared a state between two components, the most common operation is to move it up to their closest common ancestor. This is called “lifting state up”. (ie removing the local state from the descendant component and move it into its ancestor instead.)
@@ -206,12 +251,31 @@ Higher Order Components(HOC)?
         The component it returns can render the original component that was passed to it.
 
     Concretely, a higher-order component is a function that takes a component and returns a new component.
-    
 
-Controlled and Uncontrolled components?
-    This relates to stateful DOM components (form elements) and the difference:
-    A Controlled Component is one that takes its current value through props and notifies changes through callbacks like onChange. A parent component “controls” it by handling the callback and managing its own state and passing the new values as props to the controlled component.
-    A Uncontrolled Component is one that stores its own state internally, and you query the DOM using a ref to find its current value when you need it. This is a bit more like traditional HTML.
+keys in React?
+    Keys are used for identifying unique Virtual DOM Elements with their corresponding data driving the UI. They help React to optimize the rendering by recycling all the existing elements in the DOM. These keys must be a unique number or string, using which React just reorders the elements instead of re-rendering them. This leads to increase in application’s performance.
+
+    <div>
+        { joshs.map((person, index) => ( <span key={index}>{person.name}</span>)) }
+    </div>
+
+Styles on React?
+    CSS Stylesheet: Simply import css file import './DottedBox.css' so you can have a separate css file for each component.
+
+    Inline styling: In React, inline styles are not specified as a string. Instead they are specified with an object whose key is the camelCased version of the style name, and whose value is the style’s value, usually a string.
+
+    CSS Modules: A CSS Module is a CSS file in which all class names and animation names are scoped locally by default.
+
+    Styled-components: is a library for React and React Native that allows you to use component-level styles in your application that are written with a mixture of JavaScript and CSS.
+
+refs in React?
+    Refs is the short hand for References in React. It allows you to get direct access to a DOM element or an instance of a component.
+    References are created using React.createRef()and adding them to React elements through the attribute ref. References are commonly assigned to an instance property when a component is built, so they can be referenced by the component.
+
+    Following are the cases when refs should be used:
+        When you need to manage focus, select text or media playback
+        To trigger imperative animations
+        Integrate with third-party DOM libraries.
 
 Events in React?
     In order to solve cross browser compatibility issues, your event handlers in React will be passed instances of SyntheticEvent, which is React’s cross-browser wrapper around the browser’s native event. These synthetic events have the same interface as native events you’re used to, except they work identically across all browsers.
@@ -245,71 +309,6 @@ forms in React?
             return {[e.target.name]: e.target.value};
         });
     }
-
-keys in React?
-    Keys are used for identifying unique Virtual DOM Elements with their corresponding data driving the UI. They help React to optimize the rendering by recycling all the existing elements in the DOM. These keys must be a unique number or string, using which React just reorders the elements instead of re-rendering them. This leads to increase in application’s performance.
-
-    <div>
-        { joshs.map((person, index) => ( <span key={index}>{person.name}</span>)) }
-    </div>
-
-Flux?
-    Flux is an architectural pattern which enforces the unidirectional data flow. It controls data and enables comunication between multiple components using a central store.
-
-    Action -> Dispatcher -> Store -> View -> Dispatcher
-
-    Flux use multiple stores.
-    Mutable state.
-
-    Dispatcher is a registry of callbacks each store registers a callback with the dispatcher. When new data comes into the dispatcher, it then uses these callbacks to propagate that data to all of the stores.
-
-Redux?
-    Its a state managment library for javascript applications.
-    Single Source of Truth: The state of the entire application is store in a javascript object.
-    State immutable: The only way to change the state its to create a new one using the reducers after an action was triggered.
-
-    The elements that compose redux are:
-    Actions: Actions are payloads of information that send data from our application to our store. They are the only source of information for the store. We send them to the store using store.dispatch().
-    Reducers: Reducers are functions that specify how the application’s state changes in response to actions sent to the store.
-    Store: javascript object that maintains the application state.
-    View: Elements that displays on the UI the information provided by the store.
-
-    Advantages: Maintainability, Organization, Performance, Predictability and Easy to Test.
-
-    'react-redux': is designed to work with React's component model. It provides the <Provider /> HOC and the connect function.
-    <Provider/> makes the redux store avaiable to any nested component that has been wrapped by the connect function. 
-    The connect is a function that connects a react component to the store by receiving as parameters the functions mapStateToProps and mapDispatchToProps.
-    mapStateToProps subscribes the component to the redux store, this means that every time the store is updated the function will be invoked and will provide the redux store as properties in the component. It returns an object where you assign a key as the property on your component and the value as the value to pass from the state.
-    mapDispatchToProps.
-    mapDispatchToProps is a function that returns a javascript object that dispatch actions to the store and makes avaibale the actions as properties on the component it returns an object with the key as the property on the component and the value as the dispatcher.
-    connect(mapStateToProps, mapDispatchToProps) or could be connect(null,null). Connect returns a function that HOC wrapper.
-
-    'redux' is a library for state managment.
-    It provides the createStore, applyMiddleware and combineReducers functions.
-    createStore: Creates a redux store that holds the state of the application. It receives two parameters reducers and middlewares
-    createStore(reducers, middleware).
-    applyMiddleware: Is a way to extend redux functionality by applying external libraries. The most common use is to support asynchronous actions. applyMiddleware(middleware).
-    combienReducers is a helper function that turns an object whose values are different reducing functions into a single function. Receives an object as an argument. combineReducers({users: usersReducer, admins: adminsReducer});
-
-    'redux-thunk' is a middleware library to hanlde the asynchronous actions on redux. edux Thunk is middleware that allows you to return functions, rather than just actions, within Redux. This allows for delayed actions, including working with promises.
-
-    'redux-form' its a library that provides of a collection of reducer creators and actions creators that makes implementing complex and custom forms with react and redux simple and performance.
-    https://redux-form.com/8.2.2/docs/api/props.md/
-
-    redux-form primarily consists of three things:
-        A Redux reducer that listens to dispatched redux-form actions to maintain your form state in Redux.
-        A React component decorator that wraps your entire form in a Higher Order Component (HOC) and provides functionality via props.
-        A Field component to connect your individual field inputs to the Redux store.
-
-    reduxForm is High Order Component function that takes a configuration object and returns a new function. Is used to wrap the form component and bind user interaction to dispatch redux actions. Receives a unique name for the form.
-    const userForm = reduxForm({
-        form: 'userForm'
-    });
-    export default userForm;
-
-    <Field /> is a component that lives inside the form wrapped component. It is used to connect the input components to the redux-form logic.
-    The elements requires a name prop and a component prop. It may be a string input or a component. All props will be passed along the element generated by the component prop.
-    <Field name="title" component="input" type="text"/>
 
 Routing in React?
     React Router is a powerful routing library built on top of React, which helps in adding new screens and flows to the application. This keeps the URL in sync with data that’s being displayed on the web page. It maintains a standardized structure and behavior and is used for developing single page web applications.
@@ -397,264 +396,99 @@ Routing in React?
         useRouteMatch: The useRouteMatch hook attempts to match the current URL in the same way that a <Route> would. It’s mostly useful for getting access to the match data without actually rendering a <Route>.
         let match = useRouteMatch("/song/:id");
 
-Styles on React?
-    CSS Stylesheet: Simply import css file import './DottedBox.css' so you can have a separate css file for each component.
-    import './DottedBox.css';
+Context API?
+    Context provides a way to pass data through the component tree without having to pass props down manually at every level.
+    In a typical React application, data is passed top-down (parent to child) via props, but this can be cumbersome for certain types of props (e.g. locale preference, UI theme) that are required by many components within an application. Context provides a way to share values like these between components without having to explicitly pass a prop through every level of the tree.
+    Context is primarily used when some data needs to be accessible by many components at different nesting levels. Apply it sparingly because it makes component reuse more difficult.
 
-    Inline styling: In React, inline styles are not specified as a string. Instead they are specified with an object whose key is the camelCased version of the style name, and whose value is the style’s value, usually a string.
-    const divStyle = {
-    margin: '40px',
-    border: '5px solid pink'
-    };
-    const pStyle = {
-    fontSize: '15px',
-    textAlign: 'center'
-    };
-    const Box = () => (
-    <div style={divStyle}>
-        <p style={pStyle}>Get started with inline style</p>
-    </div>
-    );
+    React.createContext -> const MyContext = React.createContext(defaultValue);
+    Context.Provider -> <MyContext.Provider value={/* some value */}>
+    Context.Consumer -> <MyContext.Consumer>
+    {value => /* render something based on the context value */}
+        </MyContext.Consumer>
 
-    CSS Modules: A CSS Module is a CSS file in which all class names and animation names are scoped locally by default.
-    import styles from './styles.module.scss';
-    <span className={styles.title}>Some title</span>
-    <span className={styles.text}>Some text</span>
+    const MyContext = React.createContext(defaultValue);
+    Creates a Context object. When React renders a component that subscribes to this Context object it will read the current context value from the closest matching Provider above it in the tree.
+    The defaultValue argument is only used when a component does not have a matching Provider above it in the tree. This can be helpful for testing components in isolation without wrapping them. Note: passing undefined as a Provider value does not cause consuming components to use defaultValue.
 
-    Styled-components: is a library for React and React Native that allows you to use component-level styles in your application that are written with a mixture of JavaScript and CSS.
-    import React from 'react';
-    import styled from 'styled-components';
-    const Div = styled.div`
-    margin: 40px;
-    border: 5px outset pink;
-    &:hover {
-    background-color: yellow;
-    }
-    `;
-    const Paragraph = styled.p`
-    font-size: 15px;
-    text-align: center;
-    `;
-    const OutsetBox = () => (
-    <Div>
-        <Paragraph>Get started with styled-components </Paragraph>
-    </Div>
-    );
-    export default OutsetBox;
+    <MyContext.Provider value={/* some value */}>
+    Every Context object comes with a Provider React component that allows consuming components to subscribe to context changes.
+    Accepts a value prop to be passed to consuming components that are descendants of this Provider. One Provider can be connected to many consumers. Providers can be nested to override values deeper within the tree.
+    All consumers that are descendants of a Provider will re-render whenever the Provider’s value prop changes. The propagation from Provider to its descendant consumers is not subject to the shouldComponentUpdate method, so the consumer is updated even when an ancestor component bails out of the update
 
-create-react-app?
-    is the official CLI (Command Line Interface) for React to create React apps with no build configuration.
-    We don’t need to install or configure tools like Webpack or Babel. They are preconfigured and hidden so that we can focus on the code. We can install easily just like any other node modules. Then it is just one command to start the React project.
+    <MyContext.Consumer>
+    {value => /* render something based on the context value */}
+    </MyContext.Consumer>
+    A React component that subscribes to context changes. This lets you subscribe to a context within a function component.
+    Requires a function as a child. The function receives the current context value and returns a React node. The value argument passed to the function will be equal to the value prop of the closest Provider for this context above in the tree. If there is no Provider for this context above, the value argument will be equal to the defaultValue that was passed to createContext().
 
-    npm start Runs the app in development mode. Open http://localhost:3000 to view it in the browser.
+    The contextType property on a class can be assigned a Context object created by React.createContext(). This lets you consume the nearest current value of that Context type using this.context. You can reference this in any of the lifecycle methods including the render function.
 
-    npm test Runs the test watcher in an interactive mode. By default, runs tests related to files changed since the last commit.
+Flux?
+    Flux is an architectural pattern which enforces the unidirectional data flow. It controls data and enables comunication between multiple components using a central store.
 
-    npm run build
-    Builds the app for production to the build folder. It correctly bundles React in production mode and optimizes the build for the best performance.
+    Action -> Dispatcher -> Store -> View -> Dispatcher
 
-React Without create-react-app?
-    Create a directory in your system
-    go to the directory
-    create package.json file: npm init -y
-    install react and react-dom: npm install react react-dom
-    create app folder
-    create three files within it: index.js index.css index.html
-    install dependencies: npm install --save-dev @babel/core @babel/preset-env @babel/preset-react webpack webpack-cli webpack-dev-server babel-loader css-loader style-loader html-webpack-plugin
-    create webpack config: webpack.config.js
-    config package.json
-    define scripts
-    run scripts
+    Flux use multiple stores.
+    Mutable state.
 
-    import React from 'react';
-    import ReactDOM from 'react-dom';
-    import './index.css';
-    class App extends React.Component{
-        render(){
-            return(
-                <div>Hello World</div>
-            )
-        }
-    }
-    ReactDOM.render(<App />, document.getElementById('app'))
+    Dispatcher is a registry of callbacks each store registers a callback with the dispatcher. When new data comes into the dispatcher, it then uses these callbacks to propagate that data to all of the stores.
 
-    <!DOCTYPE html>
-    <html>
-        <head><title>
-            my-app
-        </title></head>
-        <body>
-            <div id="app"></div>
-        </body>
-    </html>
+Redux?
+    Its a state managment library for javascript applications.
+    Single Source of Truth: The state of the entire application is store in a javascript object.
+    State immutable: The only way to change the state its to create a new one using the reducers after an action was triggered.
 
-    npm install --save-dev @babel/core @babel/preset-env @babel/preset-react webpack webpack-cli webpack-dev-server babel-loader css-loader style-loader html-webpack-plugin
+    The elements that compose redux are:
+    Actions: Actions are payloads of information that send data from our application to our store. They are the only source of information for the store. We send them to the store using store.dispatch().
+    Reducers: Reducers are functions that specify how the application’s state changes in response to actions sent to the store.
+    Store: javascript object that maintains the application state.
+    View: Elements that displays on the UI the information provided by the store.
 
-    create webpagk config: webpack.config.js
-    var path = require('path');
-    var HtmlWebpackPlugin =  require('html-webpack-plugin');
-    module.exports = {
-        entry : './app/index.js',
-        output : {
-            path : path.resolve(__dirname , 'dist'),
-            filename: 'index_bundle.js'
-        },
-        module : {
-            rules : [
-                {test : /\.(js)$/, use:'babel-loader'},
-                {test : /\.css$/, use:['style-loader', 'css-loader']}
-            ]
-        },
-        mode:'development',
-        plugins : [
-            new HtmlWebpackPlugin ({
-                template : 'app/index.html'
-            })
-        ]
-    }
+    Advantages: Maintainability, Organization, Performance, Predictability and Easy to Test.
 
-    config package.json
-    "main": "index.js",
-    "babel":{
-        "presets" : [
-        "@babel/preset-env",
-        "@babel/preset-react"
-        ]
-    }
+    'react-redux': is designed to work with React's component model. It provides the <Provider /> HOC and the connect function.
+    <Provider/> makes the redux store avaiable to any nested component that has been wrapped by the connect function. 
+    The connect is a function that connects a react component to the store by receiving as parameters the functions mapStateToProps and mapDispatchToProps.
+    mapStateToProps subscribes the component to the redux store, this means that every time the store is updated the function will be invoked and will provide the redux store as properties in the component. It returns an object where you assign a key as the property on your component and the value as the value to pass from the state.
+    mapDispatchToProps.
+    mapDispatchToProps is a function that returns a javascript object that dispatch actions to the store and makes avaibale the actions as properties on the component it returns an object with the key as the property on the component and the value as the dispatcher.
+    connect(mapStateToProps, mapDispatchToProps) or could be connect(null,null). Connect returns a function that HOC wrapper.
 
-    create scripts: 
-    "scripts": {
-        "start": "webpack-dev-server --open"
-    }
+    'redux' is a library for state managment.
+    It provides the createStore, applyMiddleware and combineReducers functions.
+    createStore: Creates a redux store that holds the state of the application. It receives two parameters reducers and middlewares
+    createStore(reducers, middleware).
+    applyMiddleware: Is a way to extend redux functionality by applying external libraries. The most common use is to support asynchronous actions. applyMiddleware(middleware).
+    combienReducers is a helper function that turns an object whose values are different reducing functions into a single function. Receives an object as an argument. combineReducers({users: usersReducer, admins: adminsReducer});
 
-    run scripts 
+    'redux-thunk' is a middleware library to hanlde the asynchronous actions on redux. edux Thunk is middleware that allows you to return functions, rather than just actions, within Redux. This allows for delayed actions, including working with promises.
 
-React Testing?
-    Jest: Jest is a library for testing JavaScript code. It's an open source project maintained by Facebook, and it's especially well suited for React code testing, although not limited to that: it can test any JavaScript code. the biggest feature of Jest is it’s an out of the box solution that works without having to interact with other testing libraries to perform its job.
-    const { sum} = require('./math')
-    test('Adding 1 + 1 equals 2', () => {
-    expect(sum(1, 1)).toBe(2)
-    })
+    'redux-form' its a library that provides of a collection of reducer creators and actions creators that makes implementing complex and custom forms with react and redux simple and performance.
+    https://redux-form.com/8.2.2/docs/api/props.md/
 
-    expect(Promise.resolve('lemon')).resolves.toBe('lemon')
+    redux-form primarily consists of three things:
+        A Redux reducer that listens to dispatched redux-form actions to maintain your form state in Redux.
+        A React component decorator that wraps your entire form in a Higher Order Component (HOC) and provides functionality via props.
+        A Field component to connect your individual field inputs to the Redux store.
 
-    describe('first set', () => {
-    beforeEach(() => {
-        //do something
-    })
-    afterAll(() => {
-        //do something
-    })
-    test(/*...*/)
-    test(/*...*/)
-    })
-
-    Enzyme: React-specific testing library, allows you to manipulate and render components, access props and state, and more. Enzyme is a JavaScript Testing utility for React that makes it easier to test your React Components' output. You can also manipulate, traverse, and in some ways simulate runtime given the output.
-    Coveralls: keeps track of code coverage for the repository.
-
-    shallow
-    Shallow rendering is useful to constrain yourself to testing a component as a unit, and to ensure that your tests aren't indirectly asserting on behavior of child components.
-
-    mount
-    Full DOM rendering is ideal for use cases where you have components that may interact with DOM APIs or need to test components that are wrapped in higher order components.
-    Use enzyme's render function to generate HTML from your React tree, and analyze the resulting HTML structure.
-
-    render
-    Render returns a wrapper very similar to the other renderers in enzyme, mount and shallow; however, render uses a third party HTML parsing and traversal library Cheerio. We believe that Cheerio handles parsing and traversing HTML extremely well, and duplicating this functionality ourselves would be a disservice.
-
-    "enzyme": "^3.10.0",
-    "enzyme-adapter-react-16": "^1.14.0"
-
-    <NAME>.test.js
-
-    import React from 'react';
-    import App from './App';
-    import {shallow} from 'enzyme';
-    import { configure } from 'enzyme';
-    import Adapter from 'enzyme-adapter-react-16';
-    configure({ adapter: new Adapter() });
-
-    describe('<App />', ()=>{
-    it('check app text', () => {
-        const app = shallow(<App msg={'Cesar'} num1={1} num2={2}/>);
-        expect(app.find('.msg').text()).toBe('Cesar');
+    reduxForm is High Order Component function that takes a configuration object and returns a new function. Is used to wrap the form component and bind user interaction to dispatch redux actions. Receives a unique name for the form.
+    const userForm = reduxForm({
+        form: 'userForm'
     });
-    });
+    export default userForm;
 
-Hooks?
-    Hooks are a new addition in React 16.8. They let you use state, lifecycle methods and other React features without writing a class.
-    Hooks allow you to reuse stateful logic without changing your component hierarchy. Hooks let you split one component into smaller functions based on what pieces are related (such as setting up a subscription or fetching data).
+    <Field /> is a component that lives inside the form wrapped component. It is used to connect the input components to the redux-form logic.
+    The elements requires a name prop and a component prop. It may be a string input or a component. All props will be passed along the element generated by the component prop.
+    <Field name="title" component="input" type="text"/>
 
-    import React, { useState } from 'react';
-    function Example() {
-    // Declare a new state variable, which we'll call "count"
-    const [count, setCount] = useState(0);
-    return (
-        <div>
-        <p>You clicked {count} times</p>
-        <button onClick={() => setCount(count + 1)}>
-            Click me
-        </button>
-        </div>
-    );
-    }
+Context vs Redux?
+    Context API: Resourceful and ideal for small applications where state changes are minimal
+    Redux: Perfect for larger applications where there are high-frequency state updates
 
-    ---
-    import React, {useState, useEffect} from 'react';
+    for low-frequency updates like locale, theme changes, user authentication, etc. the React Context is perfectly fine. But with a more complex state which has high-frequency updates, the React Context won't be a good solution. Because, the React Context will trigger a re-render on each update, and optimizing it manually can be really tough. And there, a solution like Redux is much easier to implement.
 
-    function Timer(){
-        const [count, setCount] = useState(0);
-        useEffect(()=>{
-            const timer = setInterval(()=>setCount((count)=>count+1),1000); 
-            console.log('something')
-            return () => clearInterval(timer);
-        },[]);
-        return(
-            <div className="Timer">
-                <h1>{count}</h1>
-            </div>
-        );
-    }
-    export default Timer;
-    ---
-
-    useState: Returns a stateful value, and a function to update it.
-    During the initial render, the returned state (state) is the same as the value passed as the first argument (initialState).
-    The initialState argument is the state used during the initial render. 
-    If you pass an empty array as a second parameter it behaves as a componentDidMount.
-    The values inside of the array are treated like a subsciption to the them.
-    You can return a function on useEffect this will act as a componentWillUnmount.
-
-    useEffect: The function passed to useEffect will run after the render is committed to the screen. By default, effects run after every completed render, but you can choose to fire it only when certain values have changed.
-    The default behavior for effects is to fire the effect after every completed render behaves as a componentDidUpdate. 
-
-    Only Run Once, on Mount: You can pass the special value of empty array [] as a way of saying “only run on mount, and clean up on unmount”.
-
-    Run useEffect on State Change: By default, useEffect runs after every render, but it’s also perfect for running some code in response to a state change. You can limit when the effect runs by passing the second argument to useEffect. If you want your effects to run less often, you can provide a second argument – an array of values. Think of them as the dependencies for that effect. If one of the dependencies has changed since the last time, the effect will run again. (It will also still run after the initial render).
-
-    useEffect() is for side-effects:
-        A functional React component uses props and/or state to calculate the output. If the functional component makes calculations that don’t target the output value, then these calculations are named side-effects.
-        Examples of side-effects are fetch requests, manipulating DOM directly, using timer functions like setTimeout(), and more.
-        The component rendering and side-effect logic are independent. So it would be a mistake to perform side-effects directly in the body of the component.
-        How often the component renders isn’t something you can control — if React wants to render the component, you cannot stop it.
-
-
-    useRef: useRef returns a mutable ref object whose .current property is initialized to the passed argument (initialValue). The returned object will persist for the full lifetime of the component.
-
-    useMemo: Returns a memoized value. Pass a “create” function and an array of dependencies. useMemo will only recompute the memoized value when one of the dependencies has changed. This optimization helps to avoid expensive calculations on every render.
-    Remember that the function passed to useMemo runs during rendering. Don’t do anything there that you wouldn’t normally do while rendering. For example, side effects belong in useEffect, not useMemo.
-
-    useCallback: Returns a memoized callback. Pass an inline callback and an array of dependencies. useCallback will return a memoized version of the callback that only changes if one of the dependencies has changed. This is useful when passing callbacks to optimized child components that rely on reference equality to prevent unnecessary renders (e.g. shouldComponentUpdate).
-
-    useContext: Accepts a context object (the value returned from React.createContext) and returns the current context value for that context. The current context value is determined by the value prop of the nearest <MyContext.Provider> above the calling component in the tree.
-    When the nearest <MyContext.Provider> above the component updates, this Hook will trigger a rerender with the latest context value passed to that MyContext provider.
-    Don’t forget that the argument to useContext must be the context object itself:
-    A component calling useContext will always re-render when the context value changes. If re-rendering the component is expensive, you can optimize it by using memoization.
-
-    useReducer: An alternative to useState. Accepts a reducer of type (state, action) => newState, and returns the current state paired with a dispatch method. (If you’re familiar with Redux, you already know how this works.)
-    useReducer is usually preferable to useState when you have complex state logic that involves multiple sub-values or when the next state depends on the previous one. useReducer also lets you optimize performance for components that trigger deep updates because you can pass dispatch down instead of callbacks.
-
-    useLayoutEffect: The signature is identical to useEffect, but it fires synchronously after all DOM mutations. Use this to read layout from the DOM and synchronously re-render. Updates scheduled inside useLayoutEffect will be flushed synchronously, before the browser has a chance to paint.
+    For low-frequency updates like locale, theme changes, user authentication, etc. the React Context is perfectly fine. But with a more complex state which has high-frequency updates, the React Context won't be a good solution. Because, the React Context will trigger a re-render on each update, and optimizing it manually can be really tough. And there, a solution like Redux is much easier to implement.
 
 Saga?
     Redux-saga is a redux middleware library, that is designed to make handling side effects in your redux app nice and simple. It achieves this by leveraging an ES6 feature called Generators, allowing us to write asynchronous code that looks synchronous, and is very easy to test. redux-saga is a library that aims to make application side effects (i.e. asynchronous things like data fetching and impure things like accessing the browser cache) easier to manage, more efficient to execute, easy to test, and better at handling failures.
@@ -729,89 +563,183 @@ Redux-Selectors?
         getPosts
     )
     //last argument is the function that manages the logic
-React Advantages:
-    It increases the application’s performance
-    It can be conveniently used on the client as well as server side
-    Because of JSX, code’s readability increases
-    React is easy to integrate with other frameworks like Meteor, Angular, etc
-    Using React, writing UI test cases become extremely easy
 
-React Limitations:
-    React is just a library, not a full-blown framework
-    Its library is very large and takes time to understand
-    It can be little difficult for the novice programmers to understand
-    Coding gets complex as it uses inline templating and JSX
+Testing?
+    It is a set o procedures to ensure the Quality of the product. Quality product delivered to the customers helps in gaining their confidence. Testing is necessary in order to provide  high quality product or software application which requires lower maintenance cost and hence results into more accurate, consistent and reliable results. Testing is required for an effective performance of software application or product. It’s important to ensure that the application should not result into any failures because it can be very expensive in the future or in the later stages of the development.
 
-React ES6 vs ES5?
-    //IMPORTS
-    // ES5
-    var React = require('react');
-    // ES6
-    import React from 'react';
+    suite (describe): is a collection of test cases that are intended to be used to test a software program to show that it has some specified set of behaviours. Test suite is a container that has a set of tests which helps testers in executing and reporting the test execution status.
 
-    //EXPORTS
-    // ES5
-    module.exports = Component;
-    // ES6
-    export default Component;   
+    test (it||test): actual test function that invokes the function to test and uses assertion methods. A test asserttion is an expression which encapsulates some testable logic specified about a target under test.
 
-    //CLASSES
-    //ES5
-    var MyComponent = React.createClass({
-        render: function() {
-            return
-        <h3>Hello Edureka!</h3>;
-        }
-    });
-    // ES6
-    class MyComponent extends React.Component {
-        render() {
-            return <h3>Hello Edureka!</h3>;
-        }
-    }
+    spy: (Supervise Function Calls, Arguments and Returned values)
+    A test spy is an object that records its interaction with other objects throughout the code base. When deciding if a test was successful based on the state of available objects alone is not sufficient, we can use test spies and make assertions on things such as the number of calls, arguments passed to specific functions, return values and more. Test spies are useful to test both callbacks and how certain functions/methods are used throughout the system under test. 
 
-    //PROPS
-    // ES5
-    var App = React.createClass({
-        propTypes: { name: React.PropTypes.string },
-        render: function() {
-            return <h3>Hello, {this.props.name}!</h3>;
-        }
-    });
-    // ES6
-    class App extends React.Component {
-        render() {
-            return <h3>Hello, {this.props.name}!</h3>;
-        }
-    }
+    Mock: (Dummy Simulate Behavior )
+    An object under test may have dependencies on other (complex) objects. To isolate the behavior of the object you want to replace the other objects by mocks that simulate the behavior of the real objects. This is useful if the real objects are impractical to incorporate into the unit test.
+    A mock is like a stub but the test will also verify that the object under test calls the mock as expected. Part of the test is verifying that the mock was used correctly.
+    In short, mocking is creating objects that simulate the behavior of real objects.
+    Mocks are objects that register calls they receive.
+    In test assertion we can verify on Mocks that all expected actions were performed. When most people talk about Mocks what they are actually referring to are Test Doubles. A Test Double is simply another object that conforms to the interface of the required Collaborator, and can be passed in its place. There are very few classes that operate entirely in isolation. Usually they need other classes or objects in order to function, whether injected via the constructor or passed in as method parameters. These are known as Collaborators or Depencies.
 
-    //STATE
-    // ES5
-    var App = React.createClass({
-        getInitialState: function() {
-            return { name: 'world' };
-        },
-        render: function() {
-            return <h3>Hello, {this.state.name}!</h3>;
-        }
-    });
-    // ES6
-    class App extends React.Component {
-        constructor() {
-            super();
-            this.state = { name: 'world' };
-        }
-        render() {
-            return <h3>Hello, {this.state.name}!</h3>;
-    }
+    Snapshot: (Photo Screen of a state on your UI)
+    Snapshot tests are a very useful tool whenever you want to make sure your UI does not change unexpectedly.
 
-React vs Angular?
-    1. ARCHITECTURE	Only the View of MVC	Complete MVC
-    2. RENDERING	Server-side rendering	Client-side rendering
-    3. DOM	        Uses virtual DOM	    Uses real DOM
-    4. DATA BINDING	One-way data binding	Two-way data binding
-    5. DEBUGGING	Compile time debugging	Runtime debugging
-    6. AUTHOR	    Facebook	            Google
+    Stub: (Dummy Predefined Data)
+    Stub is an object that holds predefined data and uses it to answer calls during tests. It is used when we cannot or don’t want to involve objects that would answer with real data or have undesirable side effects.
+    To avoid some inconvenient interface - for instance to avoid making actual requests to a server from tests.
+    To feed the system with known data, forcing a specific code path.
+
+    Fakes: are objects that have working implementations, but not same as production one. Usually they take some shortcut and have simplified version of production code. The simplest way to think of a Fake is as a step up from a Stub. This means not only does it return values, but it also works just as a real Collaborator would.
+
+    Types of Testing:
+
+        Unit Testing: When you test your codebase, you take a piece of code — typically a function — and verify it behaves correctly in a specific situation. Unit testing is a structured and automated way of doing this. As a result, the more tests you write, the bigger the benefit you receive. You will also have a greater level of confidence in your codebase as you continue to develop it.
+
+        UI Testing: User interface or UI testing, also known as GUI testing, is the process of testing the visual elements of an application to validate whether they accurately meet the expected performance and functionality. By testing the GUI, testers can validate that UI functions are free from defects. It involves testing all visual indicators and graphical icons, including menus, radio buttons, text boxes, checkboxes, toolbars, colors, fonts, and more. How your application handles user actions performed via mouse, keyboard, and other input devices. Whether the visual elements (buttons, links, text fields, images, and so on) are displayed correctly and work as intended. We can say that GUI testing is a subset of UI testing. the term UI applies to all existing types of user interfaces. A GUI, on the other hand, it’s a specific type of user interface that makes use of graphical elements with which the user can interact.
+        The main aspects checked in UI testing include:
+            Visual Design
+            Functionality
+            Usability
+            Performance
+            Compliance  
+
+        Integration Testing: Integration testing is a level of software testing where individual units are combined and tested as a group. The purpose of this level of testing is to expose faults in the interaction between integrated units. Test drivers and test stubs are used to assist in Integration Testing.
+
+        Functional Testing: Functional testing is a type of software testing whereby the system is tested against the functional requirements/specifications. Functions (or features) are tested by feeding them input and examining the output. Functional testing ensures that the requirements are properly satisfied by the application. This type of testing is not concerned with how processing occurs, but rather, with the results of processing. It simulates actual system usage but does not make any system structure assumptions.
+
+        TDD Testing: TDD is a software development technique that involves writing automated test cases prior to writing functional pieces of the code. 
+            A developer, based on requirement documents, writes an automated test case.
+            The development team runs these automated test scripts against what is currently developed and the tests fail, as they should since none of the features have been implemented yet.
+            development team functional code to ensure the automated test script gives them a green light.
+            The development team can then refactor and organize the code to produce a tested deliverable at the end of the sprint.
+
+        BDD Testing: BDD is a software development technique that defines the user behavior prior to writing test automation scripts or the functional pieces of code. Used in an agile sprint, this method ensures that a shippable product is generated at the end of a sprint. This involves:
+            Behavior of the user is defined by a product owner/business analyst/QA in simple English.
+            These are then converted to automated scripts to run against functional code.
+            The development team then starts writing the functional code to ensure the automated test script gives them a green light.
+            The development team can then refactor and organize the code to produce a tested deliverable at the end of the sprint.
+
+        A/B Testing: A / B testing consists of comparing two versions of the same web page or application to check which of the two versions is more efficient. These variations, called A and B, are shown randomly to the different users of the web page. A part of them will see version A and the remaining part will see version B. This method consists of developing two versions of the same element that we are going to launch (for example, a blue CTA button and a yellow one), and then using the metrics of each variation to evaluate which one works better. Basically is a technique of comparing the effectiveness of different elements .
+
+React Testing JEST?
+    Jest: Jest is a library for testing JavaScript code is a Test runner. It's an open source project maintained by Facebook, and it's especially well suited for React code testing, although not limited to that: it can test any JavaScript code. the biggest feature of Jest is it’s an out of the box solution that works without having to interact with other testing libraries to perform its job.
+
+    describe(name, fn): creates a block that groups together several related tests. Jest method for containing one or more related tests. Every time you start writing a new suite of tests for a functionality wrap it in a describe block. As you can see it takes two arguments: a string for describing the test suite, and a callback function for wrapping the actual test. 
+
+    test(name, fn, timeout): Also under the alias: it(name, fn, timeout). All you need in a test file is the test method which runs a test. A function called test which is the actual test block. In the test block you have to define the expected result. 
+
+    expect: When you're writing tests, you often need to check that values meet certain conditions. expect gives you access to a number of "matchers" that let you validate different things.
+    expect(value): The expect function is used every time you want to test a value. You will rarely call expect by itself. Instead, you will use expect along with a "matcher" function to assert something about a value. Jest matchers:
+
+        toBe(value): Use .toBe to compare primitive values or to check referential identity of object instances. It calls Object.is to compare values, which is even better for testing than === strict equality operator.
+
+        not: If you know how to test something, .not lets you test its opposite.
+
+        toBeTruthy(): Use .toBeTruthy when you don't care what a value is and you want to ensure a value is true in a boolean context. 
+
+        toBeFalsy(): Use .toBeFalsy when you don't care what a value is and you want to ensure a value is false in a boolean context. 
+
+        toContain(item): Use .toContain when you want to check that an item is in an array. For testing the items in the array, this uses ===, a strict equality check. .toContain can also check whether a string is a substring of another string.
+
+        toEqual(value): Use .toEqual to compare recursively all properties of object instances (also known as "deep" equality). It calls Object.is to compare primitive values, which is even better for testing than === strict equality operator.
+
+        toMatch(regexp | string): Use .toMatch to check that a string matches a regular expression.
+
+        resolves: Use resolves to unwrap the value of a fulfilled promise so any other matcher can be chained. If the promise is rejected the assertion fails.
+
+        rejects: Use .rejects to unwrap the reason of a rejected promise so any other matcher can be chained. If the promise is fulfilled the assertion fails.
+
+        assertions(number): verifies that a certain number of assertions are called during a test. This is often useful when testing asynchronous code, in order to make sure that assertions in a callback actually got called.
+
+        hasAssertions() verifies that at least one assertion is called during a test. This is often useful when testing asynchronous code, in order to make sure that assertions in a callback actually got called.
+
+        toHaveReturned(): Also under the alias: .toReturn(). If you have a mock function, you can use .toHaveReturned to test that the mock function successfully returned (i.e., did not throw an error) at least one time.
+
+        toHaveReturnedTimes(number): Also under the alias: .toReturnTimes(number). Use .toHaveReturnedTimes to ensure that a mock function returned successfully (i.e., did not throw an error) an exact number of times. Any calls to the mock function that throw an error are not counted toward the number of times the function returned.
+
+        toThrow(error?): Also under the alias: .toThrowError(error?)
+
+    Mock Functions: Mock functions are also known as "spies", because they let you spy on the behavior of a function that is called indirectly by some other code, rather than only testing the output. You can create a mock function with jest.fn(). If no implementation is given, the mock function will return undefined when invoked.    
+
+    Snapshot Testing: Snapshot tests are a very useful tool whenever you want to make sure your UI does not change unexpectedly. A typical snapshot test case renders a UI component, takes a snapshot, then compares it to a reference snapshot file stored alongside the test. The test will fail if the two snapshots do not match: either the change is unexpected, or the reference snapshot needs to be updated to the new version of the UI component. A similar approach can be taken when it comes to testing your React components. Instead of rendering the graphical UI, which would require building the entire app, you can use a test renderer to quickly generate a serializable value for your React tree.
+        toMatchSnapshot(propertyMatchers?, hint?): This ensures that a value matches the most recent snapshot.
+
+React Testing @testing-library?
+    @testing-library: The @testing-library family of packages helps you test UI components in a user-centric way. The core library, DOM Testing Library, is a light-weight solution for testing web pages by querying and interacting with DOM nodes (whether simulated with JSDOM/Jest or in the browser). The main utilities it provides involve querying the DOM for nodes in a way that's similar to how the user finds elements on the page. In this way, the library helps ensure your tests give you confidence that your application will work when a real user uses it.
+
+    React Testing Library: React Testing Library builds on top of DOM Testing Library by adding APIs for working with React components.
+    Projects created with Create React App have out of the box support for React Testing Library. If that is not the case, you can add it via npm like so:
+        npm install --save-dev @testing-library/react
+
+    What this library is not:
+        A test runner or framework
+        Specific to a testing framework
+        DOM Testing Library works with any environment that provides DOM APIs, such as Jest, Mocha + JSDOM, or a real browser
+
+    Queries are the methods that Testing Library gives you to find elements on the page. There are several types of queries ("get", "find", "query"); the difference between them is whether the query will throw an error if no element is found or if it will return a Promise and retry. Depending on what page content you are selecting, different queries may be more or less appropriate. Use semantic queries to test your page in the most accessible way.
+
+    The base queries from DOM Testing Library require you to pass a container as the first argument. Most framework-implementations of Testing Library provide a pre-bound version of these queries when you render your components with them which means you do not have to provide a container.
+
+    screen: All of the queries exported by DOM Testing Library accept a container as the first argument. Because querying the entire document.body is very common, DOM Testing Library also exports a screen object which has every query that is pre-bound to document.body (using the within functionality). Wrappers such as React Testing Library re-export screen so you can use it the same way.
+    const exampleInput = screen.getByLabelText('Example')
+
+    render: Render into a container which is appended to document.body.
+        container: By default, React Testing Library will create a div and append that div to the document.body and this is where your React component will be rendered. If you provide your own HTMLElement container via this option, it will not be appended to the document.body automatically.
+        
+        The render method returns an object that has a few properties:
+            queries: The most important feature of render is that the queries from DOM Testing Library are automatically returned with their first argument bound to the baseElement, which defaults to document.body. 
+
+    TextMatch: Most of the query APIs take a TextMatch as an argument, which means the argument can be either a string, regex, or a function which returns true for a match and false for a mismatch.
+    screen.getByText(/^hello world$/i) // full string match, ignore case
+
+    Types of queries:
+        Single Elements:
+            getBy...: Returns the matching node for a query, and throw a descriptive error if no elements match or if more than one match is found (use getAllBy instead if more than one element is expected).
+            queryBy...: Returns the first matching node for a query, and return null if no elements match. This is useful for asserting an element that is not present. Throws an error if more than one match is found (use queryAllBy instead if this is OK).
+            findBy...: Returns a Promise which resolves when an element is found which matches the given query. The promise is rejected if no element is found or if more than one element is found after a default timeout of 1000ms. If you need to find more than one element, use findAllBy.
+        Multiple Elements:
+            getAllBy...: Returns an array of all matching nodes for a query, and throws an error if no elements match.
+            queryAllBy...: Returns an array of all matching nodes for a query, and return an empty array ([]) if no elements match.
+            findAllBy...: Returns a promise which resolves to an array of elements when any elements are found which match the given query. The promise is rejected if no elements are found after a default timeout of 1000ms.
+
+    ByText(): This will search for all elements that have a text node with textContent matching the given TextMatch.
+
+    ByTestId(): A shortcut to container.querySelector(`[data-testid="${yourId}"]`) (and it also accepts a TextMatch).
+
+    ByRole(): Queries for elements with the given role (and it also accepts a TextMatch). Default roles are taken into consideration e.g. <button /> has the button role without explicitly setting the role attribute.
+
+    ByLabelText(): This will search for the label that matches the given TextMatch, then find the element associated with that label.
+
+    ByDisplayValue(): Returns the input, textarea, or select element that has the matching display value.
+
+    Based on the Guiding Principles, your test should resemble how users interact with your code (component, page, etc.) as much as possible. With this in mind, we recommend this order of priority: 
+        Queries Accessible to Everyone queries that reflect the experience of visual/mouse users as well as those that use assistive technology
+            getByRole: This can be used to query every element that is exposed in the accessibility tree. With the name option you can filter the returned elements by their accessible name. This should be your top preference for just about everything. There's not much you can't get with this (if you can't, it's possible your UI is inaccessible). Most often, this will be used with the name option like so: getByRole('button', {name: /submit/i}). Check the list of roles.
+            getByLabelText: Only really good for form fields, but this is the number one method a user finds those elements, so it should be your top preference.
+            getByPlaceholderText: A placeholder is not a substitute for a label. But if that's all you have, then it's better than alternatives.
+            getByText: Not useful for forms, but this is the number 1 method a user finds most non-interactive elements (like divs and spans).
+            getByDisplayValue: The current value of a form element can be useful when navigating a page with filled-in values.
+
+        Semantic Queries HTML5 and ARIA compliant selectors. Note that the user experience of interacting with these attributes varies greatly across browsers and assistive technology.
+            getByAltText: If your element is one which supports alt text (img, area, and input), then you can use this to find that element.
+            getByTitle: The title attribute is not consistently read by screenreaders, and is not visible by default for sighted users
+
+        Test IDs
+            getByTestId: The user cannot see (or hear) these, so this is only recommended for cases where you can't match by role or text or it doesn't make sense (e.g. the text is dynamic).
+
+
+    Firing Events: Fire DOM events. fireEvent[eventName](node: HTMLElement, eventProperties: Object). Example: fireEvent.click(HTMLElement, eventProperties) or fireEvent.change(HTMLElement, eventProperties).
+
+        target: When an event is dispatched on an element, the event has the subjected element on a property called target. As a convenience, if you provide a target property in the eventProperties (second argument), then those properties will be assigned to the node which is receiving the event.
+
+        dataTransfer: Drag events have a dataTransfer property that contains data transferred during the operation. As a convenience, if you provide a dataTransfer property in the eventProperties (second argument), then those properties will be added to the event.
+
+        Keyboard events: There are three event types related to keyboard input - keyPress, keyDown, and keyUp. When firing these you need to reference an element in the DOM and the key you want to fire.
+
+        Convenience methods for creating DOM events that can then be fired by fireEvent, allowing you to have a reference to the event created: this might be useful if you need to access event properties that cannot be initiated programmatically (such as timeStamp). You can also create generic events.
+
+    Async Methods: Several utilities are provided for dealing with asynchronous code. These can be useful to wait for an element to appear or disappear in response to an event, user action, timeout, or Promise.findBy methods are a combination of getBy queries and waitFor. They accept the waitFor options as the last argument (e.g. await screen.findByText('text', queryOptions, waitForOptions). findBy queries work when you expect an element to appear but the change to the DOM might not happen immediately.
+    waitFor: When in need to wait for any period of time you can use waitFor, to wait for your expectations to pass.
 
 One-Way vs Two-Way databinding?
     Data Binding is the process of connecting information with displayable objects from a programmatic perspective. 
@@ -833,42 +761,6 @@ One-Way vs Two-Way databinding?
     React is one-way databinding.
     Its possible to implement two-way databinding by using input -> ngOnchange -> setState -> input value = this.state
 
-Context API?
-    Context provides a way to pass data through the component tree without having to pass props down manually at every level.
-    In a typical React application, data is passed top-down (parent to child) via props, but this can be cumbersome for certain types of props (e.g. locale preference, UI theme) that are required by many components within an application. Context provides a way to share values like these between components without having to explicitly pass a prop through every level of the tree.
-    Context is primarily used when some data needs to be accessible by many components at different nesting levels. Apply it sparingly because it makes component reuse more difficult.
-
-    React.createContext -> const MyContext = React.createContext(defaultValue);
-    Context.Provider -> <MyContext.Provider value={/* some value */}>
-    Context.Consumer -> <MyContext.Consumer>
-    {value => /* render something based on the context value */}
-        </MyContext.Consumer>
-
-    const MyContext = React.createContext(defaultValue);
-    Creates a Context object. When React renders a component that subscribes to this Context object it will read the current context value from the closest matching Provider above it in the tree.
-    The defaultValue argument is only used when a component does not have a matching Provider above it in the tree. This can be helpful for testing components in isolation without wrapping them. Note: passing undefined as a Provider value does not cause consuming components to use defaultValue.
-
-    <MyContext.Provider value={/* some value */}>
-    Every Context object comes with a Provider React component that allows consuming components to subscribe to context changes.
-    Accepts a value prop to be passed to consuming components that are descendants of this Provider. One Provider can be connected to many consumers. Providers can be nested to override values deeper within the tree.
-    All consumers that are descendants of a Provider will re-render whenever the Provider’s value prop changes. The propagation from Provider to its descendant consumers is not subject to the shouldComponentUpdate method, so the consumer is updated even when an ancestor component bails out of the update
-
-    <MyContext.Consumer>
-    {value => /* render something based on the context value */}
-    </MyContext.Consumer>
-    A React component that subscribes to context changes. This lets you subscribe to a context within a function component.
-    Requires a function as a child. The function receives the current context value and returns a React node. The value argument passed to the function will be equal to the value prop of the closest Provider for this context above in the tree. If there is no Provider for this context above, the value argument will be equal to the defaultValue that was passed to createContext().
-
-    The contextType property on a class can be assigned a Context object created by React.createContext(). This lets you consume the nearest current value of that Context type using this.context. You can reference this in any of the lifecycle methods including the render function.
-
-Context vs Redux?
-    Context API: Resourceful and ideal for small applications where state changes are minimal
-    Redux: Perfect for larger applications where there are high-frequency state updates
-
-    for low-frequency updates like locale, theme changes, user authentication, etc. the React Context is perfectly fine. But with a more complex state which has high-frequency updates, the React Context won't be a good solution. Because, the React Context will trigger a re-render on each update, and optimizing it manually can be really tough. And there, a solution like Redux is much easier to implement.
-
-    For low-frequency updates like locale, theme changes, user authentication, etc. the React Context is perfectly fine. But with a more complex state which has high-frequency updates, the React Context won't be a good solution. Because, the React Context will trigger a re-render on each update, and optimizing it manually can be really tough. And there, a solution like Redux is much easier to implement.
-
 Server Side Rendering?
     Use
         Fast initial page load especially on slower networks
@@ -883,3 +775,23 @@ Server Side Rendering?
         Static site meets the business need
         Framework in use doesn’t support server side rendering
 
+React Advantages:
+    It increases the application’s performance
+    It can be conveniently used on the client as well as server side
+    Because of JSX, code’s readability increases
+    React is easy to integrate with other frameworks like Meteor, Angular, etc
+    Using React, writing UI test cases become extremely easy
+
+React Limitations:
+    React is just a library, not a full-blown framework
+    Its library is very large and takes time to understand
+    It can be little difficult for the novice programmers to understand
+    Coding gets complex as it uses inline templating and JSX
+
+React vs Angular?
+    1. ARCHITECTURE	Only the View of MVC	Complete MVC
+    2. RENDERING	Server-side rendering	Client-side rendering
+    3. DOM	        Uses virtual DOM	    Uses real DOM
+    4. DATA BINDING	One-way data binding	Two-way data binding
+    5. DEBUGGING	Compile time debugging	Runtime debugging
+    6. AUTHOR	    Facebook	            Google

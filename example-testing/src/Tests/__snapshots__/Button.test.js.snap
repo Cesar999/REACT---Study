@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+Array [
+  <label
+    htmlFor="button-Click Me"
+  >
+    Click Me
+  </label>,
+  <button
+    data-testid="button-component"
+    id="button-Click Me"
+    onClick={[Function]}
+  >
+    Click Me
+  </button>,
+]
+`;

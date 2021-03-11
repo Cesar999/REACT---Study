@@ -13,19 +13,6 @@ create-react-app?
     npm run build
     Builds the app for production to the build folder. It correctly bundles React in production mode and optimizes the build for the best performance.
 
-React Without create-react-app?
-    Create a directory in your system
-    go to the directory
-    create package.json file: npm init -y
-    install react and react-dom: npm install react react-dom
-    create app folder
-    create three files within it: index.js index.css index.html
-    install dependencies: npm install --save-dev @babel/core @babel/preset-env @babel/preset-react webpack webpack-cli webpack-dev-server babel-loader css-loader style-loader html-webpack-plugin
-    create webpack config: webpack.config.js
-    config package.json
-    define scripts
-    run scripts
-
 What is the Virtual DOM?
     The Virtual DOM is an abstraction of the HTML DOM. It is lightweight and detached from the browser-specific implementation details. ReactElements lives in the virtual DOM. They make the basic nodes here. Once we defined the elements, ReactElements can be render into the "real" DOM. This Virtual DOM works in three simple steps.
     Whenever any underlying data changes, the entire UI is re-rendered in Virtual DOM representation.
@@ -63,6 +50,8 @@ createElement / cloneElement?
     React.cloneElement(element, [props], [...children])
     <element.type {...element.props} {...props}>{children}</element.type>
 
+    ./react-dom
+
 React.StrictMode?
     React.StrictMode is a tool to highlight potential problems in the application. Like Fragment, it StrictModedoesn't render anything in the UI. This mode also triggers additional checks and warnings for your descendants.
 
@@ -81,6 +70,8 @@ Render props / this.props.children ?
 
     this.props.children it is used to display whatever you include between the opening and closing tags when invoking a component.
 
+   ./example-props
+
 state?
     State is a javascript object owned by the component where it is declared that determines the its rendering and behaviour. Its purpose is to be dynamic an interactive. A component can initialize its state and update it whenever necessary. Thus the state is mutable but it should not be directly mutated.
 
@@ -98,6 +89,8 @@ state?
     setState(updater, callback);
 
     setState actions are asynchronous and are batched for performance gains.. This is because setState alters the state and causes rerendering. This can be an expensive operation and making it synchronous might leave the browser unresponsive. Thus the setState calls are asynchronous as well as batched for better UI experience and performance.
+
+    ./example-state-lifecycles
 
 Life Cycle methods?
     Every React Component has a lifecycle of its own, lifecycle of a component can be defined as the series of methods that are invoked in different stages of the component’s existence. 
@@ -163,6 +156,8 @@ Life Cycle methods?
     (state change)
     componentWillUpdate: React invokes this method immediately before rendering when new props or state are being received. There is not much use for componentWillUpdate(nextProps, nextState) and should probably be avoided (similar to componentWillMount). You should not do anything that would change the state at this point — use componentWillReceiveProps if you need to do anything before a render.
 
+    ./example-state-lifecycles
+
 What is a Component vs Element?
     React element is an object representation of some UI it describes what you want to see on the screen.
     A React component is a function or a class which optionally accepts input and returns a React element (typically via JSX which gets compiled to a createElement invocation). They are the building blocks of a React application’s UI. These components split up the entire UI into small independent and reusable pieces.
@@ -193,6 +188,9 @@ Controlled and Uncontrolled components?
     This relates to stateful DOM components (form elements) and the difference:
     A Controlled Component is one that takes its current value through props and notifies changes through callbacks like onChange. A parent component “controls” it by handling the callback and managing its own state and passing the new values as props to the controlled component.
     A Uncontrolled Component is one that stores its own state internally, and you query the DOM using a ref to find its current value when you need it. This is a bit more like traditional HTML.
+
+    ./functional-components
+    ./stateful-components
 
 Hooks?
     Hooks are a new addition in React 16.8. They let you use state, lifecycle methods and other React features without writing a class.
@@ -235,6 +233,7 @@ Hooks?
 
     useLayoutEffect: The signature is identical to useEffect, but it fires synchronously after all DOM mutations. Use this to read layout from the DOM and synchronously re-render. Updates scheduled inside useLayoutEffect will be flushed synchronously, before the browser has a chance to paint.
 
+    ./example-hooks
 
 lifting the state?
     To shared a state between two components, the most common operation is to move it up to their closest common ancestor. This is called “lifting state up”. (ie removing the local state from the descendant component and move it into its ancestor instead.)
@@ -252,6 +251,8 @@ Higher Order Components(HOC)?
 
     Concretely, a higher-order component is a function that takes a component and returns a new component.
 
+    ./example-hoc
+
 keys in React?
     Keys are used for identifying unique Virtual DOM Elements with their corresponding data driving the UI. They help React to optimize the rendering by recycling all the existing elements in the DOM. These keys must be a unique number or string, using which React just reorders the elements instead of re-rendering them. This leads to increase in application’s performance.
 
@@ -267,6 +268,8 @@ Styles on React?
     CSS Modules: A CSS Module is a CSS file in which all class names and animation names are scoped locally by default.
 
     Styled-components: is a library for React and React Native that allows you to use component-level styles in your application that are written with a mixture of JavaScript and CSS.
+
+    ./example-styles
 
 refs in React?
     Refs is the short hand for References in React. It allows you to get direct access to a DOM element or an instance of a component.
@@ -294,6 +297,8 @@ Events in React?
     media: onAbort onCanPlay onCanPlayThrough onDurationChange onEmptied onEncrypted onEnded onError onLoadedData onLoadedMetadata onLoadStart onPause onPlay onPlaying onProgress onRateChange onSeeked onSeeking onStalled onSuspend onTimeUpdate onVolumeChange onWaiting
     image: onLoad onError
     animation: onAnimationStart onAnimationEnd onAnimationIteration onTransitionEnd
+
+    ./example-synthetic-events
 
 forms in React?
     React forms are constructed with controlled inputs. The controlled inputs aare those that their values are attached to the state of the component. 
@@ -396,6 +401,8 @@ Routing in React?
         useRouteMatch: The useRouteMatch hook attempts to match the current URL in the same way that a <Route> would. It’s mostly useful for getting access to the match data without actually rendering a <Route>.
         let match = useRouteMatch("/song/:id");
 
+    ./example-routing
+
 Context API?
     Context provides a way to pass data through the component tree without having to pass props down manually at every level.
     In a typical React application, data is passed top-down (parent to child) via props, but this can be cumbersome for certain types of props (e.g. locale preference, UI theme) that are required by many components within an application. Context provides a way to share values like these between components without having to explicitly pass a prop through every level of the tree.
@@ -423,6 +430,8 @@ Context API?
     Requires a function as a child. The function receives the current context value and returns a React node. The value argument passed to the function will be equal to the value prop of the closest Provider for this context above in the tree. If there is no Provider for this context above, the value argument will be equal to the defaultValue that was passed to createContext().
 
     The contextType property on a class can be assigned a Context object created by React.createContext(). This lets you consume the nearest current value of that Context type using this.context. You can reference this in any of the lifecycle methods including the render function.
+
+    ./example-context
 
 Flux?
     Flux is an architectural pattern which enforces the unidirectional data flow. It controls data and enables comunication between multiple components using a central store.
@@ -482,6 +491,44 @@ Redux?
     The elements requires a name prop and a component prop. It may be a string input or a component. All props will be passed along the element generated by the component prop.
     <Field name="title" component="input" type="text"/>
 
+    ./example-redux
+    ./example-redux-thunk
+
+Redux-Selectors?
+    A selector is a function that accepts Redux state as an argument and returns data that is derived from that state. Selectors can provide performance optimizations to your application and can also help you encapsulate your global state tree. If your application is growing large and unwieldy, you may benefit from creating your own selectors or using a library such as Reselect, which utilizes memoized selectors.
+    Selectors can compute derived data, allowing Redux to store the minimal possible state.
+
+    Why should you use a selector? It is a best practice to keep your Redux store state minimal and derive data from the state as needed. Selectors help with that. They can compute derived data, allowing Redux to store the minimal possible state. Selectors are also very efficient. A selector is not recomputed unless one of its arguments changes.
+
+    Selectors are simply functions that are used to select a subset data from a larger data collection.
+    A “selector” is simply a function that accepts Redux state as an argument and returns data that is derived from that state.
+
+    Selectors are efficient. A selector is not recomputed unless one of its arguments changes.
+    Selectors are composable. They can be used as input to other selectors.
+
+    It is a best practice to keep your Redux store state minimal and derive data from the state as needed. Selectors help with that. They can compute derived data, allowing Redux to store the minimal possible state. Selectors are also very efficient. A selector is not recomputed unless one of its arguments changes.
+
+    createSelector(...inputSelectors | [inputSelectors], resultFunc)
+
+    Reselect is a popular library that provides a convenient way of getting values from a store in a React-Redux application. What makes it so good is its memoization ability. You can read all this in the documentation. In two words, when you use the createSelector() function, it memiozes an output of every input selector and recalculates the resulting value only if any of the input selectors changes its output. The important thing to note here is that reselect uses reference equality (===) to determine a value change.
+
+     for performance as Reselect provides a wrapper for creating selectors that are memoized.
+     The biggest benefit of Reselect is that selectors created with the library are memoized and therefore will only re-run if their arguments change.
+
+    import {createSelector} from 'reselect';
+    const postSelector = (state) => state.posts;
+    const selectedPostSelector = (state) => selectedPostIds;
+    const getPosts = (post, selectedPostIds) => {
+        const SelectedPosts = post.filter(item=>selectedPostIds.includes(item.id));
+        return SelectedPosts;
+    }
+    export default createSelector(
+        postSelector,
+        selectedPostSelector,
+        getPosts
+    )
+    //last argument is the function that manages the logic
+
 Context vs Redux?
     Context API: Resourceful and ideal for small applications where state changes are minimal
     Redux: Perfect for larger applications where there are high-frequency state updates
@@ -529,40 +576,7 @@ Saga?
       isolates side effect code to a single area of the application
       many helper functions and solid documentation  
 
-Redux-Selectors?
-    A selector is a function that accepts Redux state as an argument and returns data that is derived from that state. Selectors can provide performance optimizations to your application and can also help you encapsulate your global state tree. If your application is growing large and unwieldy, you may benefit from creating your own selectors or using a library such as Reselect, which utilizes memoized selectors.
-    Selectors can compute derived data, allowing Redux to store the minimal possible state.
-
-    Why should you use a selector? It is a best practice to keep your Redux store state minimal and derive data from the state as needed. Selectors help with that. They can compute derived data, allowing Redux to store the minimal possible state. Selectors are also very efficient. A selector is not recomputed unless one of its arguments changes.
-
-    Selectors are simply functions that are used to select a subset data from a larger data collection.
-    A “selector” is simply a function that accepts Redux state as an argument and returns data that is derived from that state.
-
-    Selectors are efficient. A selector is not recomputed unless one of its arguments changes.
-    Selectors are composable. They can be used as input to other selectors.
-
-    It is a best practice to keep your Redux store state minimal and derive data from the state as needed. Selectors help with that. They can compute derived data, allowing Redux to store the minimal possible state. Selectors are also very efficient. A selector is not recomputed unless one of its arguments changes.
-
-    createSelector(...inputSelectors | [inputSelectors], resultFunc)
-
-    Reselect is a popular library that provides a convenient way of getting values from a store in a React-Redux application. What makes it so good is its memoization ability. You can read all this in the documentation. In two words, when you use the createSelector() function, it memiozes an output of every input selector and recalculates the resulting value only if any of the input selectors changes its output. The important thing to note here is that reselect uses reference equality (===) to determine a value change.
-
-     for performance as Reselect provides a wrapper for creating selectors that are memoized.
-     The biggest benefit of Reselect is that selectors created with the library are memoized and therefore will only re-run if their arguments change.
-
-    import {createSelector} from 'reselect';
-    const postSelector = (state) => state.posts;
-    const selectedPostSelector = (state) => selectedPostIds;
-    const getPosts = (post, selectedPostIds) => {
-        const SelectedPosts = post.filter(item=>selectedPostIds.includes(item.id));
-        return SelectedPosts;
-    }
-    export default createSelector(
-        postSelector,
-        selectedPostSelector,
-        getPosts
-    )
-    //last argument is the function that manages the logic
+    ./example-redux-saga
 
 Testing?
     It is a set o procedures to ensure the Quality of the product. Quality product delivered to the customers helps in gaining their confidence. Testing is necessary in order to provide  high quality product or software application which requires lower maintenance cost and hence results into more accurate, consistent and reliable results. Testing is required for an effective performance of software application or product. It’s important to ensure that the application should not result into any failures because it can be very expensive in the future or in the later stages of the development.
@@ -740,6 +754,8 @@ React Testing @testing-library?
 
     Async Methods: Several utilities are provided for dealing with asynchronous code. These can be useful to wait for an element to appear or disappear in response to an event, user action, timeout, or Promise.findBy methods are a combination of getBy queries and waitFor. They accept the waitFor options as the last argument (e.g. await screen.findByText('text', queryOptions, waitForOptions). findBy queries work when you expect an element to appear but the change to the DOM might not happen immediately.
     waitFor: When in need to wait for any period of time you can use waitFor, to wait for your expectations to pass.
+
+    ./example-testing
 
 One-Way vs Two-Way databinding?
     Data Binding is the process of connecting information with displayable objects from a programmatic perspective. 

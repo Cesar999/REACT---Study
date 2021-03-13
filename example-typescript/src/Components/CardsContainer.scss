@@ -1,0 +1,37 @@
+.CardsContainer {
+    background-color: rgb(197, 211, 211);
+    width: 100vw;
+    max-width: 100%;
+    text-align: center;
+
+    button {
+        padding: 10px 15px;
+        cursor: pointer;
+    }
+
+    .menu {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        flex-wrap: wrap;
+        padding: 20px;
+    }
+
+    .currentCard{
+        background-color: rgb(255, 168, 153);
+    }
+
+    .myTeamContainer{
+        background-color: rgb(146, 184, 255);
+        .myTeam {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+    }   
+
+}
+
+
+    
+}

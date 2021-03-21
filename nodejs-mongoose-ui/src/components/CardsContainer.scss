@@ -1,0 +1,30 @@
+.CardContainer {
+    .cardsWrapper {
+        display: flex;
+        .currentPokemon {
+            background-color: teal;
+            padding: 0px 15px;
+            .catch{
+                background-color: cornflowerblue;
+                font-weight: bold;
+                border: none;
+                padding: 10px;
+                cursor: pointer;
+                color: white;
+                border: 2px solid white;
+                &:hover{
+                    color: cornflowerblue;
+                    background-color: white;
+                    border: 2px solid cornflowerblue;
+                }
+            }
+        }
+        .teamPokemon {
+            background-color: tomato;
+            .teamCardsWrapper {
+                display: flex;
+                flex-wrap: wrap;
+            }
+        }
+    }
+}

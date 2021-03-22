@@ -66,7 +66,18 @@ class Card extends Component<Pokemon, {}>{
                     {this.props.types.map((type:string)=>type).join(' ')}
                 </p>
                 <ul className="moves">
-                    {this.props.moves.map((move:string, index:number)=><li key={index}>{move}</li>)}
+                    {this.props.moves.map((move:string, index:number)=>{
+                        const mymoves = move.split('/');
+                        let symbol = null;
+                        if(mymoves[3]==='physical') {
+                            symbol = <span>&#10040;</span>
+                        } else if(mymoves[3]==='special'){
+                            symbol = <span>&#9673;</span>
+                        } else {
+                            symbol = <span>&#9681;</span>
+                        }
+                        return <li style={{background: getGradient([mymoves[2]])}} key={index}>{symbol}{` ${mymoves[0]}: ${mymoves[1]}`}</li>
+                    })}
                 </ul>
                 {this.props.releasePokemon?<button className="release" onClick={()=>this.props.releasePokemon(this.props.id)}>Release</button>:null}
             </div>

@@ -9,7 +9,8 @@ interface State {
     currentPokemon: Pokemon,
     currentTrainer: any,
     myTeam: any
-    trainers: any[]
+    trainers: any[],
+    loading: boolean
 }
 
 class CardContainer extends Component<{}, State>{
@@ -30,31 +31,57 @@ class CardContainer extends Component<{}, State>{
                 age: 0,
                 _id: ''
             },
-            trainers: []
+            trainers: [],
+            loading: false
         }
     }
 
     async componentDidMount(){
-        const pokemon: Pokemon = await getRandomPokemon();
-        await this.setState({currentPokemon: pokemon})
-        await this.updateTrainer();
-        await this.updateTeam(this.state.trainers[0].name);
+        try{
+            const pokemon: Pokemon = await getRandomPokemon();
+            await this.setState({currentPokemon: pokemon})
+            await this.updateTrainer();
+            if(this.state.trainers.length>0){
+                await this.updateTeam(this.state.trainers[0].name);
+            }
+        }
+        catch(e) {
+            console.error(e);
+        }
     }
 
     updateTrainer = async () => {
-        const data = await getAllTrainers()
-        this.setState({trainers: data});
+        try{
+            const data = await getAllTrainers()
+            await this.setState({trainers: data});
+            await this.updateTeam(this.state.trainers[0].name);
+        }
+        catch(e) {
+            console.error(e);
+        }
+
     }
 
     updateTeam = async (trainerName: string) => {
-        const currentTrainer = await getTrainer(trainerName);
-        const {name, age, _id, team} = currentTrainer;
-        await this.setState({currentTrainer: {name, age, _id}, myTeam: team});
+        try{
+            const currentTrainer = await getTrainer(trainerName);
+            const {name, age, _id, team} = currentTrainer;
+            await this.setState({currentTrainer: {name, age, _id}, myTeam: team});
+        }
+        catch(e) {
+            console.error(e);
+        }
     }
 
     handleCurrentPokemon = async () => {
-        const pokemon: Pokemon = await getRandomPokemon();
-        this.setState({currentPokemon: pokemon})
+        try{
+            await this.setState({loading: true});
+            const pokemon: Pokemon = await getRandomPokemon();
+            await this.setState({currentPokemon: pokemon, loading: false});   
+        }
+        catch(e) {
+            console.error(e);
+        }
     }
 
     handleSelect = async (e: any) => {
@@ -62,14 +89,25 @@ class CardContainer extends Component<{}, State>{
     }
 
     catchPokemon = async() => {
-        await savePokemon(this.state.currentTrainer.name, this.state.currentPokemon.id);
-        await this.updateTeam(this.state.currentTrainer.name);
-        await this.handleCurrentPokemon();
+        try{
+            await savePokemon(this.state.currentTrainer.name, this.state.currentPokemon.id);
+            await this.updateTeam(this.state.currentTrainer.name);
+            await this.handleCurrentPokemon();    
+        }
+        catch(e) {
+            console.error(e);
+        }
+
     }
 
     releasePokemon = async (pokemonID: number) => {
-        await deletePokemon(this.state.currentTrainer.name, pokemonID);
-        this.updateTeam(this.state.currentTrainer.name);
+        try{
+            await deletePokemon(this.state.currentTrainer.name, pokemonID);
+            await this.updateTeam(this.state.currentTrainer.name);
+        }
+        catch(e) {
+            console.error(e);
+        }
     }
 
     render(){
@@ -83,13 +121,15 @@ class CardContainer extends Component<{}, State>{
                 </form>
                 <h1>{this.state.currentTrainer.name}</h1>
                 <hr/>
-                <button onClick={this.handleCurrentPokemon}>Get Random Pokemon</button>
+                <div className="menu">
+                    {this.state.loading?<div className="lds-ripple"><div></div><div></div></div>:<button onClick={this.handleCurrentPokemon}>Get Random Pokemon</button>}
+                </div>
                 <hr/>
                 <div className="cardsWrapper">
                     <div className="currentPokemon">
                         <h1>Wild Pokemon</h1>
                         <Card {...this.state.currentPokemon}/>
-                        <button className="catch" onClick={this.catchPokemon}>Catch</button>
+                        {this.state.loading?<div className="lds-ripple"><div></div><div></div></div>: <button className="catch" onClick={this.catchPokemon}>Catch</button>}
                     </div>
                     <div className="teamPokemon">
                         <h1>My Team</h1>

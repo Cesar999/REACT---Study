@@ -1,0 +1,39 @@
+.MyTable {
+    width: 930px;
+}
+
+.MyTable {
+
+    .MuiTableCell-head {
+        font-weight: bold;
+        background-color: #3f50b5;
+        color: #fff;
+        text-transform: capitalize;
+
+        &:hover {
+            cursor: pointer;
+        }
+
+        .MuiTableSortLabel-active {
+            color: #fff;
+
+            .MuiTableSortLabel-icon {
+                color: #fff!important;
+           }
+
+        }
+
+        .MuiIconButton-root.deleteButton {
+            padding: 0px 12px;
+            color: #fff!important;
+            visibility: visible;
+
+            &.hidden {
+                visibility: hidden;
+            }
+
+        }
+        
+    }
+
+}

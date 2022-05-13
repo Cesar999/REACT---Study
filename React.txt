@@ -66,14 +66,14 @@ Render props / this.props.children ?
     The render prop pattern enhances React’s patterns for compositions. Instead of passing the custom components as components, you pass them as a function which renders them.
     Render Prop Component: The render prop pattern enhances React’s patterns for compositions. Instead of passing the currency components as components, you pass them as a function which renders them.
     It gives you a way to pass data from the wrapping component (Amount) to its inner composed component(s) (currency components). Because of this function, you can use the children prop within the render prop component (that’s what the Amount component became by implementing this pattern). The children prop becomes a children as a function.
-    It's important to remember that just because the pattern is called render props you don't have to use a called prop renderto use this pattern . In fact, any prop that is a function that a component uses to figure out what to render is technically a "render prop".
+    It's important to remember that just because the pattern is called render props you don't have to use a called prop render to use this pattern . In fact, any prop that is a function that a component uses to figure out what to render is technically a "render prop".
 
     this.props.children it is used to display whatever you include between the opening and closing tags when invoking a component.
 
    ./example-props
 
 state?
-    State is a javascript object owned by the component where it is declared that determines the its rendering and behaviour. Its purpose is to be dynamic an interactive. A component can initialize its state and update it whenever necessary. Thus the state is mutable but it should not be directly mutated.
+    State is a javascript object owned by the component where it is declared that determines its rendering and behaviour. Its purpose is to be dynamic an interactive. A component can initialize its state and update it whenever necessary. Thus the state is mutable but it should not be directly mutated.
 
     setState function enqueues changes to the component state an re-render with the updated state. This is the primary method you use to update the user interface in response to event handlers and server responses.
 
@@ -201,10 +201,10 @@ Hooks?
     The initialState argument is the state used during the initial render. 
     If you pass an empty array as a second parameter it behaves as a componentDidMount.
     The values inside of the array are treated like a subsciption to the them.
-    You can return a function on useEffect this will act as a componentWillUnmount.
-
+    
     useEffect: The function passed to useEffect will run after the render is committed to the screen. By default, effects run after every completed render, but you can choose to fire it only when certain values have changed.
     The default behavior for effects is to fire the effect after every completed render behaves as a componentDidUpdate. 
+    You can return a function on useEffect this will act as a componentWillUnmount.
 
     Only Run Once, on Mount: You can pass the special value of empty array [] as a way of saying “only run on mount, and clean up on unmount”.
 
@@ -273,7 +273,7 @@ Styles on React?
 
 refs in React?
     Refs is the short hand for References in React. It allows you to get direct access to a DOM element or an instance of a component.
-    References are created using React.createRef()and adding them to React elements through the attribute ref. References are commonly assigned to an instance property when a component is built, so they can be referenced by the component.
+    References are created using React.createRef() and adding them to React elements through the attribute ref. References are commonly assigned to an instance property when a component is built, so they can be referenced by the component.
 
     Following are the cases when refs should be used:
         When you need to manage focus, select text or media playback
@@ -471,7 +471,7 @@ Redux?
     applyMiddleware: Is a way to extend redux functionality by applying external libraries. The most common use is to support asynchronous actions. applyMiddleware(middleware).
     combienReducers is a helper function that turns an object whose values are different reducing functions into a single function. Receives an object as an argument. combineReducers({users: usersReducer, admins: adminsReducer});
 
-    'redux-thunk' is a middleware library to hanlde the asynchronous actions on redux. edux Thunk is middleware that allows you to return functions, rather than just actions, within Redux. This allows for delayed actions, including working with promises.
+    'redux-thunk' is a middleware library to hanlde the asynchronous actions on redux. Redux Thunk is middleware that allows you to return functions, rather than just actions, within Redux. This allows for delayed actions, including working with promises.
 
     'redux-form' its a library that provides of a collection of reducer creators and actions creators that makes implementing complex and custom forms with react and redux simple and performance.
     https://redux-form.com/8.2.2/docs/api/props.md/
@@ -534,8 +534,6 @@ Context vs Redux?
     Redux: Perfect for larger applications where there are high-frequency state updates
 
     for low-frequency updates like locale, theme changes, user authentication, etc. the React Context is perfectly fine. But with a more complex state which has high-frequency updates, the React Context won't be a good solution. Because, the React Context will trigger a re-render on each update, and optimizing it manually can be really tough. And there, a solution like Redux is much easier to implement.
-
-    For low-frequency updates like locale, theme changes, user authentication, etc. the React Context is perfectly fine. But with a more complex state which has high-frequency updates, the React Context won't be a good solution. Because, the React Context will trigger a re-render on each update, and optimizing it manually can be really tough. And there, a solution like Redux is much easier to implement.
 
 Saga?
     Redux-saga is a redux middleware library, that is designed to make handling side effects in your redux app nice and simple. It achieves this by leveraging an ES6 feature called Generators, allowing us to write asynchronous code that looks synchronous, and is very easy to test. redux-saga is a library that aims to make application side effects (i.e. asynchronous things like data fetching and impure things like accessing the browser cache) easier to manage, more efficient to execute, easy to test, and better at handling failures.
